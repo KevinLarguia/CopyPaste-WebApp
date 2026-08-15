@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: theme('colors.paper');
+  color: theme('colors.ink');
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Todo número que se compara verticalmente va en ancho fijo. */
+.cifra {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Marcas de corte: el guiño al oficio. Cuatro ángulos de 1px en las esquinas
+   de cada bloque de indicador, como las marcas de registro de una impresión.
+   Es la única licencia decorativa del sistema. */
+.marca {
+  position: relative;
+}
+.marca::before,
+.marca::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  border-color: theme('colors.rule');
+}
+.marca::before {
+  top: -1px; left: -1px;
+  border-top: 1px solid; border-left: 1px solid;
+}
+.marca::after {
+  bottom: -1px; right: -1px;
+  border-bottom: 1px solid; border-right: 1px solid;
+}
+
+.regla-doble {
+  border-bottom: 1px solid theme('colors.rule');
+  box-shadow: 0 2px 0 -1px theme('colors.rule');
+}
+
+:focus-visible {
+  outline: 2px solid theme('colors.spot');
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

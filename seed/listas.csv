@@ -1,0 +1,54 @@
+tipo,valor,orden,activo
+producto,Fotocopias / impresión BN,1,TRUE
+producto,Impresión color A4,2,TRUE
+producto,Impresión color A3,3,TRUE
+producto,Gran formato / cartelería,4,TRUE
+producto,Gigantografía,5,TRUE
+producto,Stickers en plancha (sin corte),6,TRUE
+producto,Stickers troquelados / corte de contorno,7,TRUE
+producto,Etiquetas para productos,8,TRUE
+producto,Vinilo / gráfica adhesiva,9,TRUE
+producto,Tarjetas personales,10,TRUE
+producto,Tarjetas de agradecimiento,11,TRUE
+producto,Folletos,12,TRUE
+producto,Papelería comercial,13,TRUE
+producto,Cuadernillos / anillados,14,TRUE
+producto,Libros / apuntes,15,TRUE
+producto,Plastificado / laminado,16,TRUE
+producto,Polaroids / fotos,17,TRUE
+producto,Diseño,18,TRUE
+producto,Otro,19,TRUE
+producto,Impresión color A4 Mate 220gr,20,TRUE
+producto,Impresión color A3 Fotografico 180gr,21,TRUE
+canal,Instagram (orgánico),1,TRUE
+canal,Meta Ads,2,TRUE
+canal,WhatsApp,3,TRUE
+canal,Mostrador / local,4,TRUE
+canal,Recomendación,5,TRUE
+canal,Cliente que ya compró,6,TRUE
+canal,Otro,7,TRUE
+etapa,Preparación de archivo,1,TRUE
+etapa,Impresión,2,TRUE
+etapa,Laminado / plastificado,3,TRUE
+etapa,Corte de contorno (plotter),4,TRUE
+etapa,Corte / guillotina,5,TRUE
+etapa,"Terminación (anillado, armado)",6,TRUE
+etapa,Atención al cliente,7,TRUE
+etapa,Envío / entrega,8,TRUE
+categoria_gasto,Insumos - papel,1,TRUE
+categoria_gasto,Insumos - tinta,2,TRUE
+categoria_gasto,Insumos - vinilo y film,3,TRUE
+categoria_gasto,Insumos - otros,4,TRUE
+categoria_gasto,Publicidad Meta,5,TRUE
+categoria_gasto,Envíos,6,TRUE
+categoria_gasto,Cuota de máquinas,7,TRUE
+categoria_gasto,Suscripciones y software,8,TRUE
+categoria_gasto,"Servicios (luz, internet, tel.)",9,TRUE
+categoria_gasto,Impuestos y percepciones,10,TRUE
+categoria_gasto,Mantenimiento y repuestos,11,TRUE
+categoria_gasto,Equipamiento,12,TRUE
+categoria_gasto,Sueldos y ayuda,13,TRUE
+categoria_gasto,Retiro de socios,14,TRUE
+categoria_gasto,Otro,15,TRUE
+tipo_gasto,Fijo,1,TRUE
+tipo_gasto,Variable,2,TRUE

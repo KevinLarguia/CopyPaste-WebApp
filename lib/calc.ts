@@ -1,0 +1,241 @@
+import type { Cliente, Dataset, Gasto, Venta } from './types';
+
+// Categorías que NO son gasto operativo. Regla del negocio, no técnica:
+// el retiro es plata de los socios y el envío lo paga el cliente.
+export const NO_OPERATIVAS = ['Retiro de socios', 'Envíos'];
+export const CAT_PUBLICIDAD = 'Publicidad Meta';
+export const CAT_ENVIOS = 'Envíos';
+export const CAT_RETIROS = 'Retiro de socios';
+
+// Umbrales heredados del Excel.
+export const MARGEN_MINIMO = 0.55;      // debajo, conviene revisar precios
+export const PUBLICIDAD_MAXIMA = 0.15;  // arriba, revisar si se paga sola
+
+export const claveMes = (fechaISO: string) => {
+  if (!fechaISO || fechaISO.length < 7) return 0;
+  const a = Number(fechaISO.slice(0, 4));
+  const m = Number(fechaISO.slice(5, 7));
+  return a * 100 + m;
+};
+
+export const minutosDe = (v: Venta) =>
+  (v.min_impresion || 0) + (v.min_corte || 0) + (v.min_archivo || 0);
+
+export const margenDe = (v: Venta) => (v.precio || 0) - (v.costo_materiales || 0);
+
+export function mesesConDatos(d: Dataset): number[] {
+  const s = new Set<number>();
+  d.ventas.forEach((v) => s.add(claveMes(v.fecha)));
+  d.gastos.forEach((g) => s.add(claveMes(g.fecha)));
+  s.delete(0);
+  return Array.from(s).sort((a, b) => b - a);
+}
+
+export type ResumenMes = {
+  mes: number;
+  trabajos: number;
+  facturacion: number;
+  costoMateriales: number;
+  margenBruto: number;
+  margenPct: number | null;
+  ticket: number | null;
+  minutos: number;
+  horas: number;
+  margenPorHora: number | null;
+  enviosCobrados: number;
+  enviosPagados: number;
+  diferenciaEnvios: number;
+  gastosOperativos: number;
+  publicidad: number;
+  publicidadSobreFacturacion: number | null;
+  retiros: number;
+  resultado: number;
+};
+
+export function resumenDelMes(d: Dataset, mes: number): ResumenMes {
+  const ventas = d.ventas.filter((v) => claveMes(v.fecha) === mes);
+  const gastos = d.gastos.filter((g) => claveMes(g.fecha) === mes);
+
+  const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
+  const gastoDe = (cat: string) =>
+    sum(gastos.filter((g) => g.categoria === cat).map((g) => g.monto || 0));
+
+  const facturacion = sum(ventas.map((v) => v.precio || 0));
+  const costoMateriales = sum(ventas.map((v) => v.costo_materiales || 0));
+  const margenBruto = facturacion - costoMateriales;
+  const minutos = sum(ventas.map(minutosDe));
+  const horas = minutos / 60;
+
+  const totalGastos = sum(gastos.map((g) => g.monto || 0));
+  const gastosOperativos = totalGastos - gastoDe(CAT_RETIROS) - gastoDe(CAT_ENVIOS);
+  const enviosCobrados = sum(ventas.map((v) => v.envio_cobrado || 0));
+  const enviosPagados = gastoDe(CAT_ENVIOS);
+  const publicidad = gastoDe(CAT_PUBLICIDAD);
+
+  return {
+    mes,
+    trabajos: ventas.length,
+    facturacion,
+    costoMateriales,
+    margenBruto,
+    margenPct: facturacion ? margenBruto / facturacion : null,
+    ticket: ventas.length ? facturacion / ventas.length : null,
+    minutos,
+    horas,
+    margenPorHora: horas ? margenBruto / horas : null,
+    enviosCobrados,
+    enviosPagados,
+    diferenciaEnvios: enviosCobrados - enviosPagados,
+    gastosOperativos,
+    publicidad,
+    publicidadSobreFacturacion: facturacion ? publicidad / facturacion : null,
+    retiros: gastoDe(CAT_RETIROS),
+    resultado: facturacion - gastosOperativos,
+  };
+}
+
+// Agrupa por una propiedad de texto y suma/cuenta. Sirve para canales,
+// etapas y categorías de gasto sin repetir tres veces el mismo reduce.
+function agrupar<T>(items: T[], clave: (x: T) => string, valor: (x: T) => number) {
+  const m = new Map<string, { etiqueta: string; total: number; cantidad: number }>();
+  for (const it of items) {
+    const k = clave(it) || 'Sin especificar';
+    const cur = m.get(k) || { etiqueta: k, total: 0, cantidad: 0 };
+    cur.total += valor(it);
+    cur.cantidad += 1;
+    m.set(k, cur);
+  }
+  return Array.from(m.values()).sort((a, b) => b.total - a.total);
+}
+
+export const ventasPorCanal = (d: Dataset, mes: number) =>
+  agrupar(d.ventas.filter((v) => claveMes(v.fecha) === mes), (v) => v.canal, (v) => v.precio || 0);
+
+export const minutosPorEtapa = (d: Dataset, mes: number) =>
+  agrupar(d.ventas.filter((v) => claveMes(v.fecha) === mes), (v) => v.etapa, minutosDe);
+
+export const gastosPorCategoria = (d: Dataset, mes: number) =>
+  agrupar(d.gastos.filter((g) => claveMes(g.fecha) === mes), (g) => g.categoria, (g) => g.monto || 0);
+
+export type FilaProducto = {
+  producto: string;
+  trabajos: number;
+  facturacion: number;
+  porcentaje: number;
+  costo: number;
+  margen: number;
+  margenPct: number | null;
+  ticket: number | null;
+  horas: number;
+  margenPorHora: number | null;
+};
+
+// Dinámico: sale de las ventas del mes, no de una lista fija.
+// Un producto nuevo aparece acá sin tocar código.
+export function porProducto(d: Dataset, mes: number): FilaProducto[] {
+  const ventas = d.ventas.filter((v) => claveMes(v.fecha) === mes);
+  const total = ventas.reduce((a, v) => a + (v.precio || 0), 0);
+  const m = new Map<string, Venta[]>();
+  ventas.forEach((v) => {
+    const k = v.producto || 'Sin especificar';
+    m.set(k, [...(m.get(k) || []), v]);
+  });
+
+  return Array.from(m.entries())
+    .map(([producto, vs]) => {
+      const facturacion = vs.reduce((a, v) => a + (v.precio || 0), 0);
+      const costo = vs.reduce((a, v) => a + (v.costo_materiales || 0), 0);
+      const horas = vs.reduce((a, v) => a + minutosDe(v), 0) / 60;
+      const margen = facturacion - costo;
+      return {
+        producto,
+        trabajos: vs.length,
+        facturacion,
+        porcentaje: total ? facturacion / total : 0,
+        costo,
+        margen,
+        margenPct: facturacion ? margen / facturacion : null,
+        ticket: vs.length ? facturacion / vs.length : null,
+        horas,
+        margenPorHora: horas ? margen / horas : null,
+      };
+    })
+    .sort((a, b) => (b.margenPorHora ?? -1) - (a.margenPorHora ?? -1));
+}
+
+export type FilaCliente = Cliente & {
+  compras: number;
+  facturacion: number;
+  ticket: number | null;
+  ultimaCompra: string;
+  diasSinComprar: number | null;
+  estado: 'Está activo' | 'Pronto' | 'Escribirle esta semana' | 'Hace más de 2 meses' | 'Sin compras';
+};
+
+// Los umbrales son los mismos del Excel: >30 pronto, >45 esta semana, >60 dos meses.
+export function fichaClientes(d: Dataset, hoyISO: string): FilaCliente[] {
+  const porCliente = new Map<string, Venta[]>();
+  for (const v of d.ventas) {
+    const k = v.cliente_id || v.cliente_nombre;
+    porCliente.set(k, [...(porCliente.get(k) || []), v]);
+  }
+
+  const hoy = new Date(`${hoyISO}T00:00:00Z`).getTime();
+
+  return d.clientes.map((c) => {
+    const vs = porCliente.get(c.id) || porCliente.get(c.nombre) || [];
+    const compras = (c.hist_compras || 0) + vs.length;
+    const facturacion = (c.hist_facturacion || 0) + vs.reduce((a, v) => a + (v.precio || 0), 0);
+    const fechas = [c.hist_ultima_compra, ...vs.map((v) => v.fecha)].filter(Boolean).sort();
+    const ultimaCompra = fechas[fechas.length - 1] || '';
+    const dias = ultimaCompra
+      ? Math.floor((hoy - new Date(`${ultimaCompra}T00:00:00Z`).getTime()) / 86400000)
+      : null;
+
+    let estado: FilaCliente['estado'] = 'Sin compras';
+    if (dias !== null) {
+      if (dias > 60) estado = 'Hace más de 2 meses';
+      else if (dias > 45) estado = 'Escribirle esta semana';
+      else if (dias > 30) estado = 'Pronto';
+      else estado = 'Está activo';
+    }
+
+    return {
+      ...c,
+      compras,
+      facturacion,
+      ticket: compras ? facturacion / compras : null,
+      ultimaCompra,
+      diasSinComprar: dias,
+      estado,
+    };
+  });
+}
+
+export function serieMensual(d: Dataset): ResumenMes[] {
+  return mesesConDatos(d)
+    .map((m) => resumenDelMes(d, m))
+    .sort((a, b) => a.mes - b.mes);
+}
+
+// Gastos fijos que aparecieron todos los meses anteriores pero faltan en este.
+// Nace del hallazgo de la auditoría: la cuota de máquinas dejó de cargarse.
+export function gastosFijosFaltantes(d: Dataset, mes: number): string[] {
+  const meses = mesesConDatos(d).filter((m) => m < mes);
+  if (meses.length < 2) return [];
+  const previos = meses.slice(0, 3);
+  const catsDelMes = new Set(
+    d.gastos.filter((g) => claveMes(g.fecha) === mes).map((g) => g.categoria),
+  );
+  const conteo = new Map<string, number>();
+  for (const m of previos) {
+    const cats = new Set(
+      d.gastos.filter((g: Gasto) => claveMes(g.fecha) === m && g.tipo === 'Fijo')
+        .map((g) => g.categoria),
+    );
+    cats.forEach((c) => conteo.set(c, (conteo.get(c) || 0) + 1));
+  }
+  return Array.from(conteo.entries())
+    .filter(([cat, n]) => n === previos.length && !catsDelMes.has(cat))
+    .map(([cat]) => cat);
+}

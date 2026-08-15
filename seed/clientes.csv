@@ -1,0 +1,310 @@
+id,nombre,nombre_normalizado,telefono,hist_compras,hist_facturacion,hist_ultima_compra,nombre_dudoso,creado_en,activo
+c0001,Nicol Aylen Bazan,nicol aylen bazan,,2,168800,2026-05-26,FALSE,2026-08-15T00:00:00Z,TRUE
+c0002,Yanina Soledad Marquez,yanina soledad marquez,,13,138500,2026-07-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0003,Maria Micaela Theiler,maria micaela theiler,,5,126500,2026-06-13,FALSE,2026-08-15T00:00:00Z,TRUE
+c0004,Danila Eluney Milena M,danila eluney milena m,,12,117500,2026-07-28,TRUE,2026-08-15T00:00:00Z,TRUE
+c0005,Aylen Carolina Gonzale,aylen carolina gonzale,,5,114050,2026-07-30,TRUE,2026-08-15T00:00:00Z,TRUE
+c0006,Eliana Magali Sosa,eliana magali sosa,,3,95500,2026-07-02,FALSE,2026-08-15T00:00:00Z,TRUE
+c0007,Sol Melani Solver,sol melani solver,,7,83500,2026-07-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0008,Lucila Carolina Zamboni,lucila carolina zamboni,,2,78000,2026-06-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0009,Marisa Belen Ledesma,marisa belen ledesma,,14,77700,2026-06-25,FALSE,2026-08-15T00:00:00Z,TRUE
+c0010,Irina Papis,irina papis,,3,70500,2026-07-07,FALSE,2026-08-15T00:00:00Z,TRUE
+c0011,Magali Santellan,magali santellan,,6,70300,2026-07-31,FALSE,2026-08-15T00:00:00Z,TRUE
+c0012,Alejandra Olmedo,alejandra olmedo,,4,68300,2026-06-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0013,Mateo Ignacio Bichatti,mateo ignacio bichatti,,5,67500,2026-07-24,TRUE,2026-08-15T00:00:00Z,TRUE
+c0014,Marisa Guadalupe Poldi,marisa guadalupe poldi,,4,65000,2026-07-28,TRUE,2026-08-15T00:00:00Z,TRUE
+c0015,Leonela Trinidad Oriet,leonela trinidad oriet,,11,53400,2026-07-18,TRUE,2026-08-15T00:00:00Z,TRUE
+c0016,Angeles Brend Arguello,angeles brend arguello,,2,47000,2026-06-01,TRUE,2026-08-15T00:00:00Z,TRUE
+c0017,Valeria Jaquelina Lame,valeria jaquelina lame,,7,45700,2026-06-12,TRUE,2026-08-15T00:00:00Z,TRUE
+c0018,Silvina Edit F Cabrera,silvina edit f cabrera,,1,45000,2026-05-07,TRUE,2026-08-15T00:00:00Z,TRUE
+c0019,Marianela Paula Vallet,marianela paula vallet,,2,44200,2026-06-19,TRUE,2026-08-15T00:00:00Z,TRUE
+c0020,Valentino Coronel,valentino coronel,,2,40700,2026-06-01,FALSE,2026-08-15T00:00:00Z,TRUE
+c0021,Luisiana Berlincourt,luisiana berlincourt,,3,40500,2026-05-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0022,Paulina Giussani,paulina giussani,,8,39700,2026-06-19,FALSE,2026-08-15T00:00:00Z,TRUE
+c0023,Julieta Natividad Moli,julieta natividad moli,,3,38500,2026-05-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0024,Alma Riom,alma riom,,3,38000,2026-07-10,FALSE,2026-08-15T00:00:00Z,TRUE
+c0025,Gabriela Veronica Vill,gabriela veronica vill,,3,38000,2026-07-09,TRUE,2026-08-15T00:00:00Z,TRUE
+c0026,Pablo Nicolas Sorgi,pablo nicolas sorgi,,2,38000,2026-05-22,FALSE,2026-08-15T00:00:00Z,TRUE
+c0027,Maria Soledad Rodrigue,maria soledad rodrigue,,1,38000,2026-05-29,TRUE,2026-08-15T00:00:00Z,TRUE
+c0028,Laura Antonella Rojas,laura antonella rojas,,3,33100,2026-07-31,FALSE,2026-08-15T00:00:00Z,TRUE
+c0029,Estanislao Joaquin Fer,estanislao joaquin fer,,3,33000,2026-06-19,TRUE,2026-08-15T00:00:00Z,TRUE
+c0030,Erika Anahi Molassi,erika anahi molassi,,2,32500,2026-07-26,FALSE,2026-08-15T00:00:00Z,TRUE
+c0031,Samanta Yamila Nunez,samanta yamila nunez,,2,32400,2026-07-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0032,Azul Severi,azul severi,,2,32000,2026-05-21,FALSE,2026-08-15T00:00:00Z,TRUE
+c0033,Jocelyn Gabriela Garni,jocelyn gabriela garni,,4,31000,2026-07-27,TRUE,2026-08-15T00:00:00Z,TRUE
+c0034,Punet Maria Celeste,punet maria celeste,,1,30000,2026-06-06,FALSE,2026-08-15T00:00:00Z,TRUE
+c0035,Soraya Isamara Cabral,soraya isamara cabral,,2,29800,2026-05-09,FALSE,2026-08-15T00:00:00Z,TRUE
+c0036,Sheila Selena Arredond,sheila selena arredond,,3,29500,2026-06-30,TRUE,2026-08-15T00:00:00Z,TRUE
+c0037,Natalia Soledad Blaser,natalia soledad blaser,,2,28700,2026-05-26,TRUE,2026-08-15T00:00:00Z,TRUE
+c0038,Micaela Agostina Gaete,micaela agostina gaete,,2,28000,2026-07-20,TRUE,2026-08-15T00:00:00Z,TRUE
+c0039,Cristian Marcelo Ruiz,cristian marcelo ruiz,,1,28000,2026-07-03,FALSE,2026-08-15T00:00:00Z,TRUE
+c0040,Marcos Gaspar Taboada,marcos gaspar taboada,,2,28000,2026-06-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0041,Andrea Maria Del Carme,andrea maria del carme,,1,28000,2026-06-07,TRUE,2026-08-15T00:00:00Z,TRUE
+c0042,Angelina Doux,angelina doux,,2,28000,2026-05-26,FALSE,2026-08-15T00:00:00Z,TRUE
+c0043,Jose Luis Braidot,jose luis braidot,,2,28000,2026-06-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0044,Bertoni Erika Macarena,bertoni erika macarena,,3,27900,2026-06-06,TRUE,2026-08-15T00:00:00Z,TRUE
+c0045,Lara Fiorella Gil,lara fiorella gil,,4,27500,2026-07-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0046,Maria Sol Maero,maria sol maero,,1,26000,2026-07-02,FALSE,2026-08-15T00:00:00Z,TRUE
+c0047,Amir Santiago El Halli,amir santiago el halli,,1,25500,2026-07-22,TRUE,2026-08-15T00:00:00Z,TRUE
+c0048,Eugenia Soledad Leguizamon,eugenia soledad leguizamon,,1,24700,2026-05-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0049,Leandro Gabriel Gomez,leandro gabriel gomez,,4,23500,2026-06-05,FALSE,2026-08-15T00:00:00Z,TRUE
+c0050,Julieta Agustina Oriet,julieta agustina oriet,,2,23000,2026-07-25,TRUE,2026-08-15T00:00:00Z,TRUE
+c0051,Danielanahir Duarte,danielanahir duarte,,2,23000,2026-05-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0052,Carolina Itati Mohe,carolina itati mohe,,2,23000,2026-06-13,FALSE,2026-08-15T00:00:00Z,TRUE
+c0053,Abril Lourdes Ledesma,abril lourdes ledesma,,2,22500,2026-06-10,FALSE,2026-08-15T00:00:00Z,TRUE
+c0054,Sol Nicole La Valle,sol nicole la valle,,3,22500,2026-06-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0055,Vanesa Antonella Moyano,vanesa antonella moyano,,4,21500,2026-05-26,FALSE,2026-08-15T00:00:00Z,TRUE
+c0056,Martina Borgo,martina borgo,,2,21000,2026-06-12,FALSE,2026-08-15T00:00:00Z,TRUE
+c0057,Violeta Raimondo,violeta raimondo,,3,20800,2026-06-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0058,Sofia Aylen Valenti,sofia aylen valenti,,3,20600,2026-06-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0059,Juan Ignacio Gutierrez,juan ignacio gutierrez,,1,20500,2026-06-11,TRUE,2026-08-15T00:00:00Z,TRUE
+c0060,Aquino /Melisa,aquino /melisa,,1,20400,2026-07-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0061,Yoana Belen Bianco,yoana belen bianco,,1,20000,2026-05-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0062,Quimey Sol Kinkela,quimey sol kinkela,,4,20000,2026-07-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0063,Cecilia Fiorella Alifa,cecilia fiorella alifa,,1,20000,2026-05-22,TRUE,2026-08-15T00:00:00Z,TRUE
+c0064,Hector Elias Logiovine,hector elias logiovine,,2,20000,2026-06-17,TRUE,2026-08-15T00:00:00Z,TRUE
+c0065,Andrea Maria Del Carmen Macedo,andrea maria del carmen macedo,,1,20000,2026-06-19,FALSE,2026-08-15T00:00:00Z,TRUE
+c0066,Maidana /Facundo,maidana /facundo,,2,19800,2026-07-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0067,Maria Celeste Coceres,maria celeste coceres,,2,19700,2026-06-12,FALSE,2026-08-15T00:00:00Z,TRUE
+c0068,Pase Diamela Agustina,pase diamela agustina,,3,19100,2026-06-09,FALSE,2026-08-15T00:00:00Z,TRUE
+c0069,Paula Virginia Cordoba,paula virginia cordoba,,5,18200,2026-07-26,TRUE,2026-08-15T00:00:00Z,TRUE
+c0070,Leandro Lopez,leandro lopez,,1,18000,2026-07-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0071,Ayala /Maria Belen,ayala /maria belen,,1,18000,2026-06-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0072,Agustina Saz De Larrec,agustina saz de larrec,,1,18000,2026-07-17,TRUE,2026-08-15T00:00:00Z,TRUE
+c0073,Barro Gabriel Maicol,barro gabriel maicol,,5,17900,2026-06-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0074,Luana Micaela Corales,luana micaela corales,,3,17800,2026-06-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0075,Georgina Ester Scotto,georgina ester scotto,,2,17500,2026-06-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0076,Valentina Malizia Klei,valentina malizia klei,,2,17500,2026-06-19,TRUE,2026-08-15T00:00:00Z,TRUE
+c0077,Garnica Jocelyn Gabrie,garnica jocelyn gabrie,,1,16600,2026-06-17,TRUE,2026-08-15T00:00:00Z,TRUE
+c0078,Carlotto Sabrina Alej,carlotto sabrina alej,,1,16600,2026-07-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0079,Yael Naiara Coceres,yael naiara coceres,,4,16600,2026-06-04,FALSE,2026-08-15T00:00:00Z,TRUE
+c0080,Miguel Sergio Oscar Si,miguel sergio oscar si,,1,16500,2026-07-05,TRUE,2026-08-15T00:00:00Z,TRUE
+c0081,Machado/Julieta,machado/julieta,,1,16400,2026-05-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0082,Brian Joel Carrizo,brian joel carrizo,,1,16000,2026-05-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0083,Elizabeth Estefania Valdez,elizabeth estefania valdez,,2,16000,2026-05-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0084,Karen Evelyn Favre,karen evelyn favre,,4,18000,2026-06-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0085,Estefania Sofia Cesped,estefania sofia cesped,,6,15200,2026-07-02,TRUE,2026-08-15T00:00:00Z,TRUE
+c0086,Ludmila Aylen Barbona,ludmila aylen barbona,,2,15000,2026-05-12,FALSE,2026-08-15T00:00:00Z,TRUE
+c0087,Gabriel Federico Prest,gabriel federico prest,,2,15000,2026-06-11,TRUE,2026-08-15T00:00:00Z,TRUE
+c0088,Carbone /Gustavo F,carbone /gustavo f,,2,15000,2026-06-24,FALSE,2026-08-15T00:00:00Z,TRUE
+c0089,Macarena Anabel Mansil,macarena anabel mansil,,3,14300,2026-06-13,TRUE,2026-08-15T00:00:00Z,TRUE
+c0090,Austin Fabricio Soria,austin fabricio soria,,2,14300,2026-06-05,FALSE,2026-08-15T00:00:00Z,TRUE
+c0091,Braiton Aguirre,braiton aguirre,,2,14200,2026-07-01,FALSE,2026-08-15T00:00:00Z,TRUE
+c0092,Nahiara Arlen Nunez,nahiara arlen nunez,,2,13900,2026-07-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0093,Paula Belen Sanchez,paula belen sanchez,,1,13800,2026-07-14,FALSE,2026-08-15T00:00:00Z,TRUE
+c0094,Reinoso /Leonardo Ja,reinoso /leonardo ja,,1,13800,2026-07-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0095,Lucas/G Rodriguez,lucas/g rodriguez,,1,13500,2026-05-02,FALSE,2026-08-15T00:00:00Z,TRUE
+c0096,Alejandro Jose Alvarad,alejandro jose alvarad,,3,13500,2026-06-03,TRUE,2026-08-15T00:00:00Z,TRUE
+c0097,Jara /Nahir Alana,jara /nahir alana,,1,13250,2026-07-31,FALSE,2026-08-15T00:00:00Z,TRUE
+c0098,Maria Cielo Sorgi,maria cielo sorgi,,1,13200,2026-05-21,FALSE,2026-08-15T00:00:00Z,TRUE
+c0099,Alex Ronaldo Quispe Ga,alex ronaldo quispe ga,,2,13000,2026-06-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0100,Yazmin Milagros Lescan,yazmin milagros lescan,,2,12900,2026-05-14,TRUE,2026-08-15T00:00:00Z,TRUE
+c0101,Evelin Mariel Soratti,evelin mariel soratti,,2,12200,2026-07-03,FALSE,2026-08-15T00:00:00Z,TRUE
+c0102,Alexia Wilkinson,alexia wilkinson,,3,12000,2026-05-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0103,Florencia Belen Altami,florencia belen altami,,1,12000,2026-06-30,TRUE,2026-08-15T00:00:00Z,TRUE
+c0104,Nicol Abril Zarate,nicol abril zarate,,2,12000,2026-07-10,FALSE,2026-08-15T00:00:00Z,TRUE
+c0105,Selina Yazmin Chospi B,selina yazmin chospi b,,3,11800,2026-06-09,TRUE,2026-08-15T00:00:00Z,TRUE
+c0106,Noha Gael Gomez,noha gael gomez,,1,11800,2026-07-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0107,Maria Candela Ramirez,maria candela ramirez,,1,11600,2026-06-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0108,Paulina Celeste Sorgi,paulina celeste sorgi,,3,11500,2026-06-01,FALSE,2026-08-15T00:00:00Z,TRUE
+c0109,Sofia Mariam Mansilla,sofia mariam mansilla,,2,11500,2026-05-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0110,Mateo Andres Vargas,mateo andres vargas,,1,11250,2026-06-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0111,Juan Ignacio Balenzuel,juan ignacio balenzuel,,2,11100,2026-07-23,TRUE,2026-08-15T00:00:00Z,TRUE
+c0112,Natasha Agustina Kosinski Wrobel,natasha agustina kosinski wrobel,,2,11100,2026-06-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0113,Ayelen Maria De Los Mi,ayelen maria de los mi,,2,11000,2026-07-22,TRUE,2026-08-15T00:00:00Z,TRUE
+c0114,Beatriz Nelida Torres,beatriz nelida torres,,2,10800,2026-06-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0115,Pamela Carolina Salomon,pamela carolina salomon,,2,10800,2026-06-13,FALSE,2026-08-15T00:00:00Z,TRUE
+c0116,Gianela Guadalupe Saguir,gianela guadalupe saguir,,2,10800,2026-06-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0117,Marcia Bernal,marcia bernal,,2,10700,2026-07-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0118,Maria Juliana Saudejaud,maria juliana saudejaud,,2,10500,2026-05-05,FALSE,2026-08-15T00:00:00Z,TRUE
+c0119,Sheila Maria Torres,sheila maria torres,,2,10500,2026-07-29,FALSE,2026-08-15T00:00:00Z,TRUE
+c0120,Lisandro Facundo Yaconangelo,lisandro facundo yaconangelo,,2,10400,2026-07-31,FALSE,2026-08-15T00:00:00Z,TRUE
+c0121,Carolina Anabel Mellad,carolina anabel mellad,,2,10350,2026-05-11,TRUE,2026-08-15T00:00:00Z,TRUE
+c0122,Echichurre/Tamara A,echichurre/tamara a,,3,10300,2026-05-12,FALSE,2026-08-15T00:00:00Z,TRUE
+c0123,Brisa Candela Perfumo,brisa candela perfumo,,2,10300,2026-06-09,FALSE,2026-08-15T00:00:00Z,TRUE
+c0124,Pare Romina Guadalupe,pare romina guadalupe,,1,10000,2026-06-07,FALSE,2026-08-15T00:00:00Z,TRUE
+c0125,Betiana De Los Angeles,betiana de los angeles,,1,10000,2026-07-25,TRUE,2026-08-15T00:00:00Z,TRUE
+c0126,Yesica Ayelen Bo,yesica ayelen bo,,2,10000,2026-06-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0127,Luisina Carollo,luisina carollo,,1,10000,2026-06-25,FALSE,2026-08-15T00:00:00Z,TRUE
+c0128,Uma Paulina Granado,uma paulina granado,,2,10000,2026-07-10,FALSE,2026-08-15T00:00:00Z,TRUE
+c0129,Franco Exequiel Galli,franco exequiel galli,,1,10000,2026-06-01,FALSE,2026-08-15T00:00:00Z,TRUE
+c0130,Tiziano Coronel,tiziano coronel,,1,10000,2026-07-14,FALSE,2026-08-15T00:00:00Z,TRUE
+c0131,Lautaro Exequiel Gufan,lautaro exequiel gufan,,3,10000,2026-06-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0132,Felix Omar Granado,felix omar granado,,1,10000,2026-07-14,FALSE,2026-08-15T00:00:00Z,TRUE
+c0133,Sheila Selena Arredondo,sheila selena arredondo,,2,9900,2026-07-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0134,Daiana Guadalupe Gallo,daiana guadalupe gallo,,2,9630,2026-06-19,TRUE,2026-08-15T00:00:00Z,TRUE
+c0135,Olivia Spessot Falero,olivia spessot falero,,2,9600,2026-06-06,FALSE,2026-08-15T00:00:00Z,TRUE
+c0136,Antonella Salinas Torr,antonella salinas torr,,2,9500,2026-05-06,TRUE,2026-08-15T00:00:00Z,TRUE
+c0137,Celeste Gimena Sanchez,celeste gimena sanchez,,3,9500,2026-06-11,TRUE,2026-08-15T00:00:00Z,TRUE
+c0138,Claribel Milagros Mans,claribel milagros mans,,2,9500,2026-06-03,TRUE,2026-08-15T00:00:00Z,TRUE
+c0139,Sofia Galiano,sofia galiano,,2,9500,2026-06-25,FALSE,2026-08-15T00:00:00Z,TRUE
+c0140,Abigail Sofia Vazquez,abigail sofia vazquez,,3,9400,2026-07-07,FALSE,2026-08-15T00:00:00Z,TRUE
+c0141,Faustina Belen Gimenez,faustina belen gimenez,,1,9400,2026-07-05,TRUE,2026-08-15T00:00:00Z,TRUE
+c0142,Agustina Antonella Malagueno,agustina antonella malagueno,,2,9400,2026-07-17,FALSE,2026-08-15T00:00:00Z,TRUE
+c0143,Nadia Ayelen Arredondo,nadia ayelen arredondo,,2,9300,2026-05-14,TRUE,2026-08-15T00:00:00Z,TRUE
+c0144,Lautaro Pappa,lautaro pappa,,1,9300,2026-05-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0145,Solange Ailen Favre,solange ailen favre,,2,9200,2026-06-22,FALSE,2026-08-15T00:00:00Z,TRUE
+c0146,Mercedes Virginia Moll,mercedes virginia moll,,2,9100,2026-07-20,TRUE,2026-08-15T00:00:00Z,TRUE
+c0147,Romina Paula Anali Vega,romina paula anali vega,,2,9000,2026-07-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0148,Osorio Aylen Veronica,osorio aylen veronica,,1,9000,2026-07-03,FALSE,2026-08-15T00:00:00Z,TRUE
+c0149,Matias Adonis Cataudel,matias adonis cataudel,,2,9000,2026-06-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0150,Camila Agostina Bento,camila agostina bento,,1,9000,2026-05-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0151,Maria Guadalupe Guirad,maria guadalupe guirad,,2,8800,2026-05-29,TRUE,2026-08-15T00:00:00Z,TRUE
+c0152,Agustina Bartomioli,agustina bartomioli,,2,8700,2026-07-14,FALSE,2026-08-15T00:00:00Z,TRUE
+c0153,Candela Gonzalez,candela gonzalez,,2,8500,2026-06-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0154,Tobias Joel Iossen,tobias joel iossen,,1,8500,2026-06-29,FALSE,2026-08-15T00:00:00Z,TRUE
+c0155,Naiara Brunella Brez,naiara brunella brez,,2,8500,2026-06-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0156,Martin Alejandro Picci,martin alejandro picci,,1,8400,2026-07-01,TRUE,2026-08-15T00:00:00Z,TRUE
+c0157,Celene Abigail Guadalupe Martinez,celene abigail guadalupe martinez,,2,8300,2026-06-01,FALSE,2026-08-15T00:00:00Z,TRUE
+c0158,Fiorela Lucrecia Bauce,fiorela lucrecia bauce,,2,8300,2026-06-24,TRUE,2026-08-15T00:00:00Z,TRUE
+c0159,Giuliana Niello,giuliana niello,,1,8000,2026-06-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0160,Agostina Lara Sanchez,agostina lara sanchez,,2,8000,2026-06-06,FALSE,2026-08-15T00:00:00Z,TRUE
+c0161,Valentina Martinez,valentina martinez,,1,8000,2026-05-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0162,Alegre Marisol Esther,alegre marisol esther,,1,8000,2026-07-21,FALSE,2026-08-15T00:00:00Z,TRUE
+c0163,Agustina De Meyer,agustina de meyer,,2,7900,2026-05-29,FALSE,2026-08-15T00:00:00Z,TRUE
+c0164,Ariel Leandro Gomez Pa,ariel leandro gomez pa,,1,7800,2026-07-06,TRUE,2026-08-15T00:00:00Z,TRUE
+c0165,Lautaro Elias Menenado,lautaro elias menenado,,2,7800,2026-06-29,TRUE,2026-08-15T00:00:00Z,TRUE
+c0166,Nahir Camila Martinez,nahir camila martinez,,1,7700,2026-06-24,FALSE,2026-08-15T00:00:00Z,TRUE
+c0167,Sofia Isabel Delfino,sofia isabel delfino,,1,7500,2026-05-05,FALSE,2026-08-15T00:00:00Z,TRUE
+c0168,Alejo Hernan Alegre,alejo hernan alegre,,1,7500,2026-06-06,FALSE,2026-08-15T00:00:00Z,TRUE
+c0169,Bruno Agustin Balbastr,bruno agustin balbastr,,1,7500,2026-05-13,TRUE,2026-08-15T00:00:00Z,TRUE
+c0170,Elias Misael Cipriani,elias misael cipriani,,2,7500,2026-06-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0171,Sasha Jazmin Alegre,sasha jazmin alegre,,1,7500,2026-06-03,FALSE,2026-08-15T00:00:00Z,TRUE
+c0172,Preti /Maria Eugenia,preti /maria eugenia,,1,7500,2026-06-12,FALSE,2026-08-15T00:00:00Z,TRUE
+c0173,Joaquin Nazareno Pined,joaquin nazareno pined,,2,7500,2026-06-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0174,Jovanna Milagros Coass,jovanna milagros coass,,2,7500,2026-07-17,TRUE,2026-08-15T00:00:00Z,TRUE
+c0175,Julian Giannone,julian giannone,,2,7500,2026-07-02,FALSE,2026-08-15T00:00:00Z,TRUE
+c0176,Sofia Guadalupe Barrer,sofia guadalupe barrer,,2,7500,2026-07-24,TRUE,2026-08-15T00:00:00Z,TRUE
+c0177,Lara Lomello,lara lomello,,1,7400,2026-07-29,FALSE,2026-08-15T00:00:00Z,TRUE
+c0178,Miguel Sergio Oscar Silva,miguel sergio oscar silva,,1,7400,2026-06-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0179,Lucas Gonzalo Rodrigue,lucas gonzalo rodrigue,,2,7400,2026-07-28,TRUE,2026-08-15T00:00:00Z,TRUE
+c0180,Magali Azul Rosati,magali azul rosati,,2,7300,2026-07-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0181,Jazmin Guadalupe Cejas,jazmin guadalupe cejas,,2,7200,2026-06-26,TRUE,2026-08-15T00:00:00Z,TRUE
+c0182,Cintia Eliana Ramirez,cintia eliana ramirez,,2,7100,2026-05-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0183,Valentina Nicol Perri,valentina nicol perri,,1,7000,2026-05-09,FALSE,2026-08-15T00:00:00Z,TRUE
+c0184,Alejandro Andres Rolda,alejandro andres rolda,,1,7000,2026-07-17,TRUE,2026-08-15T00:00:00Z,TRUE
+c0185,Merlo /Emilio Ignacio,merlo /emilio ignacio,,2,6700,2026-07-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0186,Mateo Julian Toniollo,mateo julian toniollo,,2,6500,2026-05-07,FALSE,2026-08-15T00:00:00Z,TRUE
+c0187,Melisa Alejandra Mora,melisa alejandra mora,,1,6500,2026-06-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0188,Selene Aylen Cuenca,selene aylen cuenca,,2,6500,2026-05-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0189,Romina Ursula Paz,romina ursula paz,,2,6500,2026-06-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0190,Dafne Micaela Acevedo,dafne micaela acevedo,,1,6500,2026-06-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0191,Lucas Jeremias Di Lore,lucas jeremias di lore,,2,6400,2026-06-02,TRUE,2026-08-15T00:00:00Z,TRUE
+c0192,Patricia Alejandra Perez,patricia alejandra perez,,1,6200,2026-07-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0193,Irina Marianela Garcia,irina marianela garcia,,2,6000,2026-06-20,TRUE,2026-08-15T00:00:00Z,TRUE
+c0194,Saus Diego Andres,saus diego andres,,2,6000,2026-06-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0195,Francisco Daniel Zalazar,francisco daniel zalazar,,1,6000,2026-07-10,FALSE,2026-08-15T00:00:00Z,TRUE
+c0196,Emanuel Nicolas Gigena,emanuel nicolas gigena,,1,6000,2026-07-17,TRUE,2026-08-15T00:00:00Z,TRUE
+c0197,Elena Beatriz Espindol,elena beatriz espindol,,1,5900,2026-06-24,TRUE,2026-08-15T00:00:00Z,TRUE
+c0198,Maria Soledad Rodriguez,maria soledad rodriguez,,1,5700,2026-05-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0199,Jazmin Fiant,jazmin fiant,,2,5600,2026-05-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0200,Melisa Guadalupe Azoga,melisa guadalupe azoga,,2,5600,2026-07-08,TRUE,2026-08-15T00:00:00Z,TRUE
+c0201,Samanta Soledad Bravo,samanta soledad bravo,,1,5500,2026-05-19,FALSE,2026-08-15T00:00:00Z,TRUE
+c0202,Perez /Maria Silvina,perez /maria silvina,,1,5500,2026-07-24,FALSE,2026-08-15T00:00:00Z,TRUE
+c0203,Celeste Lucina Lagger,celeste lucina lagger,,2,5500,2026-07-15,FALSE,2026-08-15T00:00:00Z,TRUE
+c0204,Francesca Bussi,francesca bussi,,1,5500,2026-07-30,FALSE,2026-08-15T00:00:00Z,TRUE
+c0205,Maria Paula Lezcano De,maria paula lezcano de,,2,5500,2026-05-20,TRUE,2026-08-15T00:00:00Z,TRUE
+c0206,Ganin Maximo Tomas,ganin maximo tomas,,2,5500,2026-05-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0207,Lucia Gamba,lucia gamba,,2,5500,2026-05-22,FALSE,2026-08-15T00:00:00Z,TRUE
+c0208,Valentina Martinez Ace,valentina martinez ace,,2,5300,2026-06-12,TRUE,2026-08-15T00:00:00Z,TRUE
+c0209,Fiorella Granatti,fiorella granatti,,1,5300,2026-05-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0210,Maria Celeste Hernande,maria celeste hernande,,1,5300,2026-07-13,TRUE,2026-08-15T00:00:00Z,TRUE
+c0211,Celina Tamara Brusauro,celina tamara brusauro,,1,5250,2026-06-08,TRUE,2026-08-15T00:00:00Z,TRUE
+c0212,Rosario Guillermina Ra,rosario guillermina ra,,2,5100,2026-06-02,TRUE,2026-08-15T00:00:00Z,TRUE
+c0213,Rocio Soledad Santana,rocio soledad santana,,1,5100,2026-05-06,FALSE,2026-08-15T00:00:00Z,TRUE
+c0214,Martina Avalos,martina avalos,,1,5000,2026-07-25,FALSE,2026-08-15T00:00:00Z,TRUE
+c0215,Constanza Citino,constanza citino,,1,5000,2026-06-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0216,Milena Cristina Del Carmen Garzon,milena cristina del carmen garzon,,1,5000,2026-07-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0217,Maria Milagros Molina,maria milagros molina,,1,5000,2026-06-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0218,Maria Eugenia Micaela Sosa,maria eugenia micaela sosa,,1,5000,2026-07-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0219,Lia Rocio Quinteros,lia rocio quinteros,,2,5000,2026-07-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0220,Carlos Ivan Leiva,carlos ivan leiva,,1,5000,2026-06-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0221,Sofia Soledad Enrique,sofia soledad enrique,,2,4800,2026-07-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0222,Nerea Evelyn Perez,nerea evelyn perez,,1,4800,2026-05-21,FALSE,2026-08-15T00:00:00Z,TRUE
+c0223,Diana Brisa Godoy,diana brisa godoy,,2,4600,2026-06-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0224,Julia Nailen Fernandez,julia nailen fernandez,,1,4600,2026-06-20,TRUE,2026-08-15T00:00:00Z,TRUE
+c0225,Vera Frontelli Villagr,vera frontelli villagr,,2,4500,2026-05-19,TRUE,2026-08-15T00:00:00Z,TRUE
+c0226,Maria Pia Dejon,maria pia dejon,,1,4500,2026-05-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0227,Ailen Rocio Cabrera,ailen rocio cabrera,,2,4500,2026-05-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0228,Gonzalez/Yael Abril,gonzalez/yael abril,,2,4500,2026-05-15,FALSE,2026-08-15T00:00:00Z,TRUE
+c0229,Selina Yazmin Chospi Basualdo,selina yazmin chospi basualdo,,1,4500,2026-05-26,FALSE,2026-08-15T00:00:00Z,TRUE
+c0230,Mariano Ivan Gomez,mariano ivan gomez,,1,4400,2026-05-07,FALSE,2026-08-15T00:00:00Z,TRUE
+c0231,Natasha Elisabet Cacer,natasha elisabet cacer,,1,4300,2026-06-20,TRUE,2026-08-15T00:00:00Z,TRUE
+c0232,Gianella Ailen Aguirre,gianella ailen aguirre,,1,4300,2026-06-02,TRUE,2026-08-15T00:00:00Z,TRUE
+c0233,Sandoval/Selene Lucia,sandoval/selene lucia,,2,4300,2026-06-20,FALSE,2026-08-15T00:00:00Z,TRUE
+c0234,Cecilia Belen Alarcon,cecilia belen alarcon,,1,4300,2026-05-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0235,Cristian Rodolfo Osori,cristian rodolfo osori,,1,4000,2026-07-04,TRUE,2026-08-15T00:00:00Z,TRUE
+c0236,Antonella Sueldo,antonella sueldo,,1,4000,2026-06-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0237,Luciano Nicolas Romero,luciano nicolas romero,,1,4000,2026-05-07,TRUE,2026-08-15T00:00:00Z,TRUE
+c0238,Mia Irupe Pereyra,mia irupe pereyra,,1,4000,2026-05-05,FALSE,2026-08-15T00:00:00Z,TRUE
+c0239,Micaela Palleiro,micaela palleiro,,2,4000,2026-06-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0240,Nancy Elisabet Olivare,nancy elisabet olivare,,1,4000,2026-07-31,TRUE,2026-08-15T00:00:00Z,TRUE
+c0241,Jazmin Rodriguez,jazmin rodriguez,,1,4000,2026-07-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0242,Maria Carolina Baldi,maria carolina baldi,,1,4000,2026-06-17,FALSE,2026-08-15T00:00:00Z,TRUE
+c0243,Luana Maria Campos,luana maria campos,,1,3900,2026-06-09,FALSE,2026-08-15T00:00:00Z,TRUE
+c0244,Leonardo Daniel Sueldo,leonardo daniel sueldo,,1,3800,2026-06-09,TRUE,2026-08-15T00:00:00Z,TRUE
+c0245,Evangelina Rano,evangelina rano,,2,3800,2026-07-01,FALSE,2026-08-15T00:00:00Z,TRUE
+c0246,Herrero Camila Daiana,herrero camila daiana,,1,3700,2026-07-09,FALSE,2026-08-15T00:00:00Z,TRUE
+c0247,Erika Romina Bustos,erika romina bustos,,1,3700,2026-06-19,FALSE,2026-08-15T00:00:00Z,TRUE
+c0248,Maria Florencia Ordone,maria florencia ordone,,2,3700,2026-07-27,TRUE,2026-08-15T00:00:00Z,TRUE
+c0249,Maria Eugenia Vitarell,maria eugenia vitarell,,2,3700,2026-07-10,TRUE,2026-08-15T00:00:00Z,TRUE
+c0250,Juan Pablo Cardozo,juan pablo cardozo,,2,3700,2026-07-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0251,Villa /Rocio,villa /rocio,,1,3700,2026-07-11,FALSE,2026-08-15T00:00:00Z,TRUE
+c0252,Valentina Uma Changra,valentina uma changra,,2,3500,2026-05-18,FALSE,2026-08-15T00:00:00Z,TRUE
+c0253,Antonio Jose Carletti,antonio jose carletti,,1,3500,2026-05-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0254,Argpagos S A,argpagos s a,,1,3500,2026-05-22,FALSE,2026-08-15T00:00:00Z,TRUE
+c0255,Mara Valentina Simonin,mara valentina simonin,,2,3500,2026-06-02,TRUE,2026-08-15T00:00:00Z,TRUE
+c0256,Guillermina Arro,guillermina arro,,2,3500,2026-07-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0257,Francisco Arellano,francisco arellano,,1,3500,2026-05-05,FALSE,2026-08-15T00:00:00Z,TRUE
+c0258,Sabrina Araceli Rivero,sabrina araceli rivero,,1,3460,2026-06-03,TRUE,2026-08-15T00:00:00Z,TRUE
+c0259,Pamela Bartoli,pamela bartoli,,2,3300,2026-05-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0260,Camila Milena Garavagl,camila milena garavagl,,1,3100,2026-06-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0261,Silvio Alejandro Rolda,silvio alejandro rolda,,2,3100,2026-06-16,TRUE,2026-08-15T00:00:00Z,TRUE
+c0262,Abigail Belen Visconti,abigail belen visconti,,1,3000,2026-05-20,TRUE,2026-08-15T00:00:00Z,TRUE
+c0263,Lautaro Exequiel Gufanti,lautaro exequiel gufanti,,1,3000,2026-06-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0264,Maria Laura Rodriguez,maria laura rodriguez,,1,3000,2026-07-29,FALSE,2026-08-15T00:00:00Z,TRUE
+c0265,Maria Emilia Farall,maria emilia farall,,1,3000,2026-06-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0266,Camila Daiana Herrero,camila daiana herrero,,1,3000,2026-07-10,FALSE,2026-08-15T00:00:00Z,TRUE
+c0267,Camila Agustina Zotta,camila agustina zotta,,1,3000,2026-06-14,FALSE,2026-08-15T00:00:00Z,TRUE
+c0268,Nazaret Alba Lucia Vis,nazaret alba lucia vis,,1,3000,2026-06-26,TRUE,2026-08-15T00:00:00Z,TRUE
+c0269,Barreyra Damian Marcel,barreyra damian marcel,,1,3000,2026-05-26,TRUE,2026-08-15T00:00:00Z,TRUE
+c0270,Claudia Graciela Welk,claudia graciela welk,,6,2840,2026-07-27,FALSE,2026-08-15T00:00:00Z,TRUE
+c0271,Morena Alumine Gallo,morena alumine gallo,,1,2800,2026-07-25,FALSE,2026-08-15T00:00:00Z,TRUE
+c0272,Paula Elvira Piedra Bu,paula elvira piedra bu,,1,2660,2026-06-27,TRUE,2026-08-15T00:00:00Z,TRUE
+c0273,Abril Ballarini,abril ballarini,,1,2500,2026-07-29,FALSE,2026-08-15T00:00:00Z,TRUE
+c0274,Gervasoni/Silvia G,gervasoni/silvia g,,1,2500,2026-06-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0275,Vissani /Jonatan Alberto,vissani /jonatan alberto,,1,2500,2026-06-26,FALSE,2026-08-15T00:00:00Z,TRUE
+c0276,Ignacio Franicevich,ignacio franicevich,,2,2500,2026-07-28,FALSE,2026-08-15T00:00:00Z,TRUE
+c0277,Joaquin Leonardo Weinz,joaquin leonardo weinz,,1,2500,2026-06-25,TRUE,2026-08-15T00:00:00Z,TRUE
+c0278,Bazan/ Alexis Danie,bazan/ alexis danie,,1,2500,2026-07-15,FALSE,2026-08-15T00:00:00Z,TRUE
+c0279,Caroline Irma Gandange,caroline irma gandange,,1,2500,2026-07-30,TRUE,2026-08-15T00:00:00Z,TRUE
+c0280,Paula Celina Fernandez,paula celina fernandez,,1,2500,2026-07-15,TRUE,2026-08-15T00:00:00Z,TRUE
+c0281,Zoe Trossero,zoe trossero,,1,2400,2026-05-12,FALSE,2026-08-15T00:00:00Z,TRUE
+c0282,Valentina Rivero,valentina rivero,,1,2400,2026-05-13,FALSE,2026-08-15T00:00:00Z,TRUE
+c0283,Bianca Sofia Di Yorio,bianca sofia di yorio,,2,2300,2026-05-19,FALSE,2026-08-15T00:00:00Z,TRUE
+c0284,Marisol Esther Alegre,marisol esther alegre,,1,2100,2026-07-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0285,Ana Gabriela Franco,ana gabriela franco,,1,2000,2026-05-08,FALSE,2026-08-15T00:00:00Z,TRUE
+c0286,Daiana Soledad Aquino,daiana soledad aquino,,1,2000,2026-05-14,FALSE,2026-08-15T00:00:00Z,TRUE
+c0287,Macarena Gabriela Piumatti,macarena gabriela piumatti,,1,2000,2026-05-26,FALSE,2026-08-15T00:00:00Z,TRUE
+c0288,Diego Sebastian Fernandez,diego sebastian fernandez,,1,1800,2026-06-03,FALSE,2026-08-15T00:00:00Z,TRUE
+c0289,Tatiana Ayelen Acosta,tatiana ayelen acosta,,1,1600,2026-07-25,FALSE,2026-08-15T00:00:00Z,TRUE
+c0290,Iara Yelena Baiche,iara yelena baiche,,1,1400,2026-06-10,FALSE,2026-08-15T00:00:00Z,TRUE
+c0291,Martina Belen Nunxxez,martina belen nunxxez,,1,1300,2026-05-16,FALSE,2026-08-15T00:00:00Z,TRUE
+c0292,Bonora Lara Angelina,bonora lara angelina,,1,1250,2026-07-23,FALSE,2026-08-15T00:00:00Z,TRUE
+c0293,Lara Angelina Bonora,lara angelina bonora,,1,1250,2026-07-21,FALSE,2026-08-15T00:00:00Z,TRUE
+c0294,Brisa Yanina Celeste I,brisa yanina celeste i,,1,1040,2026-05-12,TRUE,2026-08-15T00:00:00Z,TRUE
+c0295,Mariana Soledad Roda,mariana soledad roda,,1,700,2026-06-15,FALSE,2026-08-15T00:00:00Z,TRUE
+c0296,Natalia Titolo,natalia titolo,+54 9 3482 27-3206,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0297,Danila Creaciones,danila creaciones,+54 9 342 591-8949,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0298,Natalia García,natalia garcia,,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0299,Ariadna Jazmin Gonzalez,ariadna jazmin gonzalez,+54 9 342 594-7349,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0300,Lara Antunez,lara antunez,+54 9 3408 68-0123,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0301,Lara Gil,lara gil,+54 9 342 540-4427,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0302,Cecilia Flores,cecilia flores,+54 9 342 567-6014,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0303,Celene Martinez,celene martinez,+54 9 342 514-5891,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0304,Facundo Maidana,facundo maidana,+54 9 342 528-3439,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0305,Camila Leiro,camila leiro,+54 9 342 578-6228,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0306,Laura Rodriguez,laura rodriguez,+54 9 342 479-0281,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0307,Malena Mendoza,malena mendoza,+54 9 342 479-4599,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0308,Selina Basualdo,selina basualdo,+54 9 342 639-2005,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE
+c0309,Negro Silvio,negro silvio,+54 9 342 439-2335,0,0,,FALSE,2026-08-15T00:00:00Z,TRUE

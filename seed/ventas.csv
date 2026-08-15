@@ -1,0 +1,19 @@
+id,fecha,cliente_id,cliente_nombre,producto,cantidad,precio,envio_cobrado,costo_materiales,costo_expresion,min_impresion,min_corte,min_archivo,canal,etapa,notas,telefono,creado_en,actualizado_en,activo
+v0001,2026-08-13,c0059,Juan Ignacio Gutierrez,Stickers troquelados / corte de contorno,100,21000,1700,2100,,12,40,5,Cliente que ya compró,Corte de contorno (plotter),,,2026-08-15T00:00:00Z,,TRUE
+v0002,2026-08-12,c0296,Natalia Titolo,Fotocopias / impresión BN,1350,75000,0,18000,,30,5,5,WhatsApp,Impresión,corte 4mil,,2026-08-15T00:00:00Z,,TRUE
+v0003,2026-08-13,c0297,Danila Creaciones,Impresión color A3,2,3600,2000,400,,5,0,2,Cliente que ya compró,Impresión,fotografico 180gr,,2026-08-15T00:00:00Z,,TRUE
+v0004,2026-08-13,c0297,Danila Creaciones,Impresión color A4,2,1800,0,400,,5,0,2,Cliente que ya compró,Impresión,mate 220gr,,2026-08-15T00:00:00Z,,TRUE
+v0005,2026-08-13,c0298,Natalia García,Folletos,200,18000,0,1100,,15,20,10,WhatsApp,Corte / guillotina,folletos color,,2026-08-15T00:00:00Z,,TRUE
+v0006,2026-08-14,c0299,Ariadna Jazmin Gonzalez,Impresión color A4,7,21700,0,2700,,20,25,15,WhatsApp,Corte de contorno (plotter),7 HOJAS DF 240GR Y 2 FILMILO TROQUEL,+54 9 342 594-7349,2026-08-15T00:00:00Z,,TRUE
+v0007,2026-08-14,c0300,Lara Antunez,Stickers troquelados / corte de contorno,1,3700,0,300,,0,0,0,,,,+54 9 3408 68-0123,2026-08-15T00:00:00Z,,TRUE
+v0008,2026-08-14,c0301,Lara Gil,Stickers troquelados / corte de contorno,1,3700,0,300,,3,15,0,Cliente que ya compró,Corte / guillotina,hoja filmilo,+54 9 342 540-4427,2026-08-15T00:00:00Z,,TRUE
+v0009,2026-08-14,c0302,Cecilia Flores,Stickers troquelados / corte de contorno,4,14800,2000,2700,,10,20,10,WhatsApp,Corte de contorno (plotter),pague un envio ya que falto enviar uan hoja,+54 9 342 567-6014,2026-08-15T00:00:00Z,,TRUE
+v0010,2026-08-14,c0303,Celene Martinez,Libros / apuntes,54,5300,0,1000,,7,5,2,Cliente que ya compró,Impresión,cuadernillo,+54 9 342 514-5891,2026-08-15T00:00:00Z,,TRUE
+v0011,2026-08-14,c0304,Facundo Maidana,Libros / apuntes,226,17900,1500,3500,,12,7,4,WhatsApp,Impresión,cuadernillos,+54 9 342 528-3439,2026-08-15T00:00:00Z,,TRUE
+v0012,2026-08-14,c0305,Camila Leiro,Libros / apuntes,64,5500,1000,1200,,7,7,3,WhatsApp,Impresión,libro,+54 9 342 578-6228,2026-08-15T00:00:00Z,,TRUE
+v0013,2026-08-14,c0306,Laura Rodriguez,Libros / apuntes,128,10700,0,2105,15*127+200,10,6,5,Cliente que ya compró,Impresión,2 cuadernillos,+54 9 342 479-0281,2026-08-15T00:00:00Z,,TRUE
+v0014,2026-08-14,c0297,Danila Creaciones,Impresión color A4,4,5400,2000,700,,10,2,5,Cliente que ya compró,Impresión,2 mate a4 2 fotograifca a3,+54 9 342 591-8949,2026-08-15T00:00:00Z,,TRUE
+v0015,2026-08-14,c0307,Malena Mendoza,Libros / apuntes,84,7060,2500,1376,84*14+200,10,7,4,Cliente que ya compró,Impresión,1 cuardernillo,+54 9 342 479-4599,2026-08-15T00:00:00Z,,TRUE
+v0016,2026-08-14,c0296,Natalia Titolo,Libros / apuntes,750,75000,0,18250,,40,5,5,WhatsApp,Impresión,impresion a5 para agendas,+54 9 3482 27-3206,2026-08-15T00:00:00Z,,TRUE
+v0017,2026-08-14,c0308,Selina Basualdo,Fotocopias / impresión BN,10,700,0,120,,2,0,2,Cliente que ya compró,Impresión,,+54 9 342 639-2005,2026-08-15T00:00:00Z,,TRUE
+v0018,2026-08-14,c0309,Negro Silvio,Libros / apuntes,27,4000,0,605,27*15+200,5,3,2,Cliente que ya compró,Impresión,librito,+54 9 342 439-2335,2026-08-15T00:00:00Z,,TRUE

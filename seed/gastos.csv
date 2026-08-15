@@ -1,0 +1,5 @@
+id,fecha,categoria,detalle,monto,proveedor,tipo,creado_en,actualizado_en,activo
+g0001,2026-08-14,Insumos - papel,Resma A4 x5,42000,Visual Insumos,Variable,2026-08-15T00:00:00Z,,TRUE
+g0002,2026-08-14,Insumos - vinilo y film,20 hojas,10200,Insufe,Variable,2026-08-15T00:00:00Z,,TRUE
+g0003,2026-08-14,Publicidad Meta,Transferencia a Dollar App,50000,Meta,Fijo,2026-08-15T00:00:00Z,,TRUE
+g0004,2026-08-14,Insumos - papel,100 hojas 240gr doble faz,25000,Equitop,Variable,2026-08-15T00:00:00Z,,TRUE
