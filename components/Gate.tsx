@@ -20,9 +20,9 @@ export default function Gate({ children }: { children: React.ReactNode }) {
 
   if (!tieneClave) {
     return (
-      <main className="flex min-h-screen items-center justify-center px-5">
-        <div className="marca w-full max-w-sm border border-rule bg-paper p-7">
-          <div className="mb-1 text-[11px] uppercase tracking-[0.18em] text-muted">CopyPaste</div>
+      <main className="flex min-h-screen items-center justify-center bg-surface px-5">
+        <div className="marca w-full max-w-sm rounded-2xl border border-rule bg-paper p-7 shadow-card">
+          <div className="mb-1 text-[11px] uppercase tracking-[0.18em] text-spot">Copy-Paste</div>
           <h1 className="mb-1 text-lg font-semibold">Clave del local</h1>
           <p className="mb-5 text-sm text-muted">
             Se pide una sola vez por dispositivo. Después queda guardada.

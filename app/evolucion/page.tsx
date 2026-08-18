@@ -7,7 +7,8 @@ import {
 import { useDatos } from '@/lib/data-context';
 import { serieMensual } from '@/lib/calc';
 import { money, nombreMes, num, pct } from '@/lib/format';
-import { Celda, Dinero, Fila, Porcentaje, Seccion, Tabla, Titulo, Vacio } from '@/components/ui';
+import { Celda, Dinero, Fila, Porcentaje, Seccion, Tabla, Tarjeta, Titulo, Vacio } from '@/components/ui';
+import { INK, MUTED, RULE, SERIE_1, SERIE_2 } from '@/lib/chart-colors';
 
 const ejeCompacto = (v: number) =>
   Math.abs(v) >= 1000000 ? `${(v / 1000000).toFixed(1)}M` : `${Math.round(v / 1000)}k`;
@@ -32,37 +33,37 @@ export default function Evolucion() {
       ) : (
         <>
           <Seccion titulo="Facturación y resultado" nota="Mes a mes, para ver si crece o solo se mueve.">
-            <div className="h-72 w-full border border-rule bg-paper p-4">
+            <Tarjeta className="h-72 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={grafico} margin={{ top: 4, right: 8, left: -12, bottom: 0 }}>
-                  <CartesianGrid stroke="#332F27" vertical={false} />
-                  <XAxis dataKey="mes" tick={{ fontSize: 11, fill: '#93897d' }} tickLine={false} axisLine={{ stroke: '#332F27' }} />
-                  <YAxis tickFormatter={ejeCompacto} tick={{ fontSize: 11, fill: '#93897d' }} tickLine={false} axisLine={false} />
+                  <CartesianGrid stroke={RULE} vertical={false} />
+                  <XAxis dataKey="mes" tick={{ fontSize: 11, fill: MUTED }} tickLine={false} axisLine={{ stroke: RULE }} />
+                  <YAxis tickFormatter={ejeCompacto} tick={{ fontSize: 11, fill: MUTED }} tickLine={false} axisLine={false} />
                   <Tooltip
                     formatter={(v: number) => money(v)}
-                    contentStyle={{ border: '1px solid #332F27', borderRadius: 3, fontSize: 13, backgroundColor: '#181815', color: '#F0EFEA' }}
-                    labelStyle={{ color: '#F0EFEA' }}
+                    contentStyle={{ border: `1px solid ${RULE}`, borderRadius: 8, fontSize: 13, backgroundColor: '#FFFFFF', color: INK }}
+                    labelStyle={{ color: INK }}
                   />
-                  <Legend wrapperStyle={{ fontSize: 12, color: '#F0EFEA' }} />
-                  <Bar dataKey="Facturación" fill="#3FB6D4" />
-                  <Bar dataKey="Resultado" fill="#F0EFEA" />
+                  <Legend wrapperStyle={{ fontSize: 12, color: INK }} />
+                  <Bar dataKey="Facturación" fill={SERIE_1} radius={[3, 3, 0, 0]} />
+                  <Bar dataKey="Resultado" fill={SERIE_2} radius={[3, 3, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
-            </div>
+            </Tarjeta>
           </Seccion>
 
           <Seccion titulo="Margen por hora" nota="El número que decide qué máquina comprar y qué producto empujar.">
-            <div className="h-60 w-full border border-rule bg-paper p-4">
+            <Tarjeta className="h-60 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={grafico} margin={{ top: 4, right: 8, left: -12, bottom: 0 }}>
-                  <CartesianGrid stroke="#332F27" vertical={false} />
-                  <XAxis dataKey="mes" tick={{ fontSize: 11, fill: '#93897d' }} tickLine={false} axisLine={{ stroke: '#332F27' }} />
-                  <YAxis tickFormatter={ejeCompacto} tick={{ fontSize: 11, fill: '#93897d' }} tickLine={false} axisLine={false} />
-                  <Tooltip formatter={(v: number) => money(v)} contentStyle={{ border: '1px solid #332F27', borderRadius: 3, fontSize: 13, backgroundColor: '#181815', color: '#F0EFEA' }} labelStyle={{ color: '#F0EFEA' }} />
-                  <Line type="monotone" dataKey="Margen por hora" stroke="#3FB6D4" strokeWidth={2} dot={{ r: 3 }} />
+                  <CartesianGrid stroke={RULE} vertical={false} />
+                  <XAxis dataKey="mes" tick={{ fontSize: 11, fill: MUTED }} tickLine={false} axisLine={{ stroke: RULE }} />
+                  <YAxis tickFormatter={ejeCompacto} tick={{ fontSize: 11, fill: MUTED }} tickLine={false} axisLine={false} />
+                  <Tooltip formatter={(v: number) => money(v)} contentStyle={{ border: `1px solid ${RULE}`, borderRadius: 8, fontSize: 13, backgroundColor: '#FFFFFF', color: INK }} labelStyle={{ color: INK }} />
+                  <Line type="monotone" dataKey="Margen por hora" stroke={SERIE_1} strokeWidth={2} dot={{ r: 3 }} />
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </Tarjeta>
           </Seccion>
 
           <Seccion titulo="Detalle mensual">

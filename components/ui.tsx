@@ -3,39 +3,88 @@
 import { ReactNode } from 'react';
 import { money, num, pct } from '@/lib/format';
 
-export function Titulo({ children, accion }: { children: ReactNode; accion?: ReactNode }) {
+export function Titulo({
+  children, subtitulo, accion,
+}: { children: ReactNode; subtitulo?: ReactNode; accion?: ReactNode }) {
   return (
-    <div className="regla-doble mb-6 flex flex-wrap items-end justify-between gap-3 pb-3">
-      <h1 className="text-[22px] font-semibold tracking-tight">{children}</h1>
+    <div className="mb-7 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h1 className="text-[22px] font-semibold tracking-tight">{children}</h1>
+        {subtitulo && <p className="mt-0.5 text-sm text-muted">{subtitulo}</p>}
+      </div>
       {accion}
     </div>
   );
 }
 
-export function Seccion({ titulo, nota, children }: { titulo: string; nota?: string; children: ReactNode }) {
+export function Tarjeta({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return (
+    <div className={`rounded-2xl bg-surface p-5 shadow-card ${className}`}>{children}</div>
+  );
+}
+
+export function Seccion({ titulo, nota, accion, children }: {
+  titulo: string; nota?: string; accion?: ReactNode; children: ReactNode;
+}) {
   return (
     <section className="mb-9">
-      <div className="mb-3 flex items-baseline gap-3 border-b border-rule pb-1.5">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">{titulo}</h2>
-        {nota && <p className="text-xs text-muted">{nota}</p>}
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3 border-b border-rule pb-1.5">
+        <div className="flex items-baseline gap-3">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">{titulo}</h2>
+          {nota && <p className="text-xs text-muted">{nota}</p>}
+        </div>
+        {accion}
       </div>
       {children}
     </section>
   );
 }
 
+export function Segmentado<T extends string>({
+  valor, opciones, onChange,
+}: { valor: T; opciones: { valor: T; etiqueta: string }[]; onChange: (v: T) => void }) {
+  return (
+    <div className="inline-flex rounded-lg bg-rule/50 p-0.5">
+      {opciones.map((o) => (
+        <button
+          key={o.valor}
+          type="button"
+          onClick={() => onChange(o.valor)}
+          className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+            valor === o.valor ? 'bg-paper text-ink shadow-sm' : 'text-muted hover:text-ink'
+          }`}
+        >
+          {o.etiqueta}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 type TonoKpi = 'normal' | 'pos' | 'neg' | 'alerta';
 
 export function Kpi({
-  etiqueta, valor, nota, tono = 'normal', grande = false,
-}: { etiqueta: string; valor: string; nota?: string; tono?: TonoKpi; grande?: boolean }) {
+  etiqueta, valor, nota, tono = 'normal', grande = false, cambio,
+}: {
+  etiqueta: string; valor: string; nota?: string; tono?: TonoKpi; grande?: boolean;
+  cambio?: { texto: string; tono: 'pos' | 'neg' };
+}) {
   const color =
     tono === 'pos' ? 'text-pos' : tono === 'neg' ? 'text-neg' : tono === 'alerta' ? 'text-neg' : 'text-ink';
   return (
-    <div className="marca border border-rule bg-paper p-4">
+    <div className="rounded-2xl bg-surface p-4 shadow-card">
       <div className="text-[11px] uppercase tracking-[0.1em] text-muted">{etiqueta}</div>
-      <div className={`cifra mt-1.5 font-mono ${grande ? 'text-3xl' : 'text-2xl'} font-semibold ${color}`}>
-        {valor}
+      <div className="mt-1.5 flex items-baseline gap-2">
+        <span className={`cifra font-mono ${grande ? 'text-3xl' : 'text-2xl'} font-semibold ${color}`}>
+          {valor}
+        </span>
+        {cambio && (
+          <span className={`cifra rounded-full px-1.5 py-0.5 text-[11px] font-semibold ${
+            cambio.tono === 'pos' ? 'bg-pos/10 text-pos' : 'bg-neg/10 text-neg'
+          }`}>
+            {cambio.texto}
+          </span>
+        )}
       </div>
       {nota && <div className="mt-1.5 text-xs leading-snug text-muted">{nota}</div>}
     </div>
@@ -73,7 +122,7 @@ export function Tabla({ cabeceras, children, vacio }: {
 }
 
 export const Fila = ({ children }: { children: ReactNode }) => (
-  <tr className="border-b border-rule last:border-0 hover:bg-white/[0.035]">{children}</tr>
+  <tr className="border-b border-rule last:border-0 hover:bg-ink/[0.025]">{children}</tr>
 );
 
 export const Celda = ({ children, der, mono, className = '' }: {
@@ -101,8 +150,8 @@ export function Boton({
   className?: string;
 }) {
   const estilos = {
-    primario: 'bg-ink text-paper hover:opacity-90 disabled:bg-muted',
-    secundario: 'border border-rule bg-paper text-ink hover:border-ink/40',
+    primario: 'bg-spot text-paper hover:bg-spot/90 disabled:bg-muted',
+    secundario: 'border border-rule bg-paper text-ink hover:bg-surface',
     peligro: 'border border-neg/30 bg-paper text-neg hover:bg-neg/5',
   }[tipo];
   return (
@@ -110,7 +159,7 @@ export function Boton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex h-10 items-center justify-center px-4 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${estilos} ${className}`}
+      className={`inline-flex h-10 cursor-pointer items-center justify-center rounded-lg px-4 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${estilos} ${className}`}
     >
       {children}
     </button>
@@ -135,7 +184,7 @@ export function Campo({
 }
 
 export const claseInput =
-  'h-11 w-full border border-rule bg-paper px-3 text-[15px] text-ink placeholder:text-muted/60 focus:border-spot focus:outline-none';
+  'h-11 w-full rounded-lg border border-rule bg-paper px-3 text-[15px] text-ink placeholder:text-muted/60 focus:border-spot focus:outline-none';
 
 export const Input = (p: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input {...p} className={`${claseInput} ${p.className || ''}`} />
@@ -147,15 +196,15 @@ export const Select = (p: React.SelectHTMLAttributes<HTMLSelectElement>) => (
 
 export const Aviso = ({ tono = 'info', children }: { tono?: 'info' | 'alerta' | 'error'; children: ReactNode }) => {
   const c = {
-    info: 'border-rule bg-paper text-ink',
-    alerta: 'border-l-2 border-l-spot border-y-rule border-r-rule bg-spot/[0.04] text-ink',
-    error: 'border-l-2 border-l-neg border-y-rule border-r-rule bg-neg/[0.04] text-ink',
+    info: 'border-rule bg-surface text-ink',
+    alerta: 'border-l-2 border-l-gold border-y-rule border-r-rule bg-gold/[0.06] text-ink',
+    error: 'border-l-2 border-l-neg border-y-rule border-r-rule bg-neg/[0.05] text-ink',
   }[tono];
-  return <div className={`border px-4 py-3 text-sm leading-relaxed ${c}`}>{children}</div>;
+  return <div className={`rounded-lg border px-4 py-3 text-sm leading-relaxed ${c}`}>{children}</div>;
 };
 
 export const Vacio = ({ children }: { children: ReactNode }) => (
-  <div className="border border-dashed border-rule px-4 py-10 text-center text-sm text-muted">
+  <div className="rounded-lg border border-dashed border-rule px-4 py-10 text-center text-sm text-muted">
     {children}
   </div>
 );
