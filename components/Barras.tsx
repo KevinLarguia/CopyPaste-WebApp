@@ -8,7 +8,7 @@ export default function Barras({
   filas, formato = 'dinero', vacio = 'Todavía no hay datos para este mes.',
 }: {
   filas: { etiqueta: string; total: number; cantidad?: number }[];
-  formato?: 'dinero' | 'minutos';
+  formato?: 'dinero' | 'minutos' | 'horas';
   vacio?: string;
 }) {
   const visibles = filas.filter((f) => f.total > 0);
@@ -16,7 +16,8 @@ export default function Barras({
     return <p className="py-6 text-center text-sm text-muted">{vacio}</p>;
   }
   const max = Math.max(...visibles.map((f) => f.total));
-  const fmt = (n: number) => (formato === 'dinero' ? money(n) : `${num(n)} min`);
+  const fmt = (n: number) =>
+    formato === 'dinero' ? money(n) : formato === 'horas' ? `${num(n, 1)} h` : `${num(n)} min`;
 
   return (
     <ul className="space-y-2.5">
@@ -26,8 +27,8 @@ export default function Barras({
             <span className="truncate">{f.etiqueta}</span>
             <span className="cifra shrink-0 font-mono text-[13px]">{fmt(f.total)}</span>
           </div>
-          <div className="h-1.5 w-full bg-rule">
-            <div className="h-full bg-spot" style={{ width: `${(f.total / max) * 100}%` }} />
+          <div className="h-1.5 w-full rounded-full bg-rule">
+            <div className="h-full rounded-full bg-spot" style={{ width: `${(f.total / max) * 100}%` }} />
           </div>
         </li>
       ))}

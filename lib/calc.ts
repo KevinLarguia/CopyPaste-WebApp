@@ -1,3 +1,4 @@
+import { hoy } from './format';
 import type { Cliente, Dataset, Gasto, Venta } from './types';
 
 // Categorías que NO son gasto operativo. Regla del negocio, no técnica:
@@ -106,6 +107,58 @@ function agrupar<T>(items: T[], clave: (x: T) => string, valor: (x: T) => number
     m.set(k, cur);
   }
   return Array.from(m.values()).sort((a, b) => b.total - a.total);
+}
+
+// Un punto por día del mes (incluidos los días sin ventas, para que la
+// línea no salte). Si el mes es el actual, corta en hoy: no tiene sentido
+// mostrar los días que todavía no pasaron cayendo a cero.
+export function ventasPorDia(d: Dataset, mes: number, hoyISO = hoy()) {
+  const anio = Math.floor(mes / 100);
+  const mesNum = mes % 100;
+  const diasEnMes = new Date(anio, mesNum, 0).getDate();
+  const esMesActual = mes === claveMes(hoyISO);
+  const hastaDia = esMesActual ? Number(hoyISO.slice(8, 10)) : diasEnMes;
+
+  const totales = new Map<string, number>();
+  d.ventas
+    .filter((v) => claveMes(v.fecha) === mes)
+    .forEach((v) => totales.set(v.fecha, (totales.get(v.fecha) || 0) + (v.precio || 0)));
+
+  const dias: { dia: number; fecha: string; total: number }[] = [];
+  for (let i = 1; i <= hastaDia; i++) {
+    const fecha = `${anio}-${String(mesNum).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+    dias.push({ dia: i, fecha, total: totales.get(fecha) || 0 });
+  }
+  return dias;
+}
+
+// Semanas de calendario (1-7, 8-14, ...) dentro del mes, no ISO: así
+// coinciden con "semana 1 / semana 2" tal como las cuenta cualquiera.
+export function horasPorSemana(d: Dataset, mes: number) {
+  const anio = Math.floor(mes / 100);
+  const mesNum = mes % 100;
+  const diasEnMes = new Date(anio, mesNum, 0).getDate();
+  const cantSemanas = Math.ceil(diasEnMes / 7);
+
+  const minutosPorSemana = new Map<number, number>();
+  d.ventas
+    .filter((v) => claveMes(v.fecha) === mes)
+    .forEach((v) => {
+      const dia = Number(v.fecha.slice(8, 10));
+      const semana = Math.floor((dia - 1) / 7) + 1;
+      minutosPorSemana.set(semana, (minutosPorSemana.get(semana) || 0) + minutosDe(v));
+    });
+
+  const filas: { etiqueta: string; total: number }[] = [];
+  for (let s = 1; s <= cantSemanas; s++) {
+    const diaInicio = (s - 1) * 7 + 1;
+    const diaFin = Math.min(s * 7, diasEnMes);
+    filas.push({
+      etiqueta: `Semana ${s} (${diaInicio}–${diaFin})`,
+      total: (minutosPorSemana.get(s) || 0) / 60,
+    });
+  }
+  return filas;
 }
 
 export const ventasPorCanal = (d: Dataset, mes: number) =>
