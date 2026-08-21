@@ -46,3 +46,12 @@ export function evaluarExpresion(entrada: string): number | null {
 }
 
 export const esExpresion = (s: string) => /[+\-*/()]/.test(String(s ?? '').replace(/^-/, ''));
+
+// Solo dígitos: sirve tanto para comparar teléfonos escritos con distinto
+// formato como para armar el link de wa.me (que los quiere sin "+" ni espacios).
+export const normalizarTelefono = (s: string) => String(s ?? '').replace(/\D/g, '');
+
+export function waLink(telefono: string): string | null {
+  const d = normalizarTelefono(telefono);
+  return d.length >= 8 ? `https://wa.me/${d}` : null;
+}

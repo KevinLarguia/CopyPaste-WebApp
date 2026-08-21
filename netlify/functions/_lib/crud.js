@@ -6,7 +6,7 @@ const { ok, fail, fromGoogleError } = require('./respond');
 const { SHEETS, newId, validate } = require('./schema');
 const cache = require('./cache');
 
-function makeHandler(sheetName, idPrefix) {
+function makeHandler(sheetName, idPrefix, { beforeSave } = {}) {
   return async function handler(event) {
     const auth = checkKey(event);
     if (!auth.ok) return fail(401, auth.reason);
@@ -35,6 +35,7 @@ function makeHandler(sheetName, idPrefix) {
         if (key === 'id') value.id = newId(idPrefix);
         if (def.columns.includes('creado_en')) value.creado_en = new Date().toISOString();
         if (def.columns.includes('activo')) value.activo = true;
+        if (beforeSave) await beforeSave(value);
 
         await appendRow(sheetName, value);
         cache.clear();
@@ -50,6 +51,7 @@ function makeHandler(sheetName, idPrefix) {
         if (!valid) return fail(422, errors[0], { errors });
 
         delete value.creado_en; // no se pisa nunca
+        if (beforeSave) await beforeSave(value);
         const item = await updateRowById(sheetName, id, value);
         cache.clear();
         return ok({ item });

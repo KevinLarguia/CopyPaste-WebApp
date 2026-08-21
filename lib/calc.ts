@@ -1,5 +1,5 @@
-import { hoy } from './format';
-import type { Cliente, Dataset, Gasto, Venta } from './types';
+import { hoy, normalizarTelefono } from './format';
+import type { Cliente, Dataset, Gasto, Plantilla, Tarifa, Venta } from './types';
 
 // Categorías que NO son gasto operativo. Regla del negocio, no técnica:
 // el retiro es plata de los socios y el envío lo paga el cliente.
@@ -23,6 +23,71 @@ export const minutosDe = (v: Venta) =>
   (v.min_impresion || 0) + (v.min_corte || 0) + (v.min_archivo || 0);
 
 export const margenDe = (v: Venta) => (v.precio || 0) - (v.costo_materiales || 0);
+
+// Minutos y hojas que sugiere una plantilla para una cantidad dada. Los
+// minutos de impresión y corte escalan con la cantidad, el archivo es fijo
+// por trabajo (armar el arte no depende de cuántas unidades salen).
+export function aplicarPlantilla(pl: Plantilla, cantidad: number) {
+  const c = cantidad || 0;
+  return {
+    hojas: (pl.hojas_por_unidad || 0) * c,
+    min_impresion: Math.round((pl.min_impresion_por_unidad || 0) * c),
+    min_corte: Math.round((pl.min_corte_por_unidad || 0) * c),
+    min_archivo: pl.min_archivo_fijo || 0,
+  };
+}
+
+export function clientePorTelefono(clientes: Cliente[], telefono: string): Cliente | null {
+  const d = normalizarTelefono(telefono);
+  if (d.length < 6) return null;
+  return clientes.find((c) => normalizarTelefono(c.telefono) === d) || null;
+}
+
+// Nombre provisorio para un cliente que solo dio el teléfono. Se marca
+// `nombre_dudoso` para que aparezca en el mismo cartel de "nombres
+// incompletos" que ya existe en Clientes, y se corrija ahí después.
+export const nombreProvisorioDeTelefono = (telefono: string) => `Cliente ${telefono}`.trim();
+
+// Último precio que un cliente pagó por un producto puntual: sirve como
+// sugerencia al cargar, no se guarda solo. `null` si nunca lo compró.
+export function ultimoPrecioProducto(d: Dataset, clienteId: string, producto: string): number | null {
+  if (!clienteId || !producto) return null;
+  const ventas = d.ventas
+    .filter((v) => v.cliente_id === clienteId && v.producto === producto)
+    .sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0));
+  return ventas[0]?.precio ?? null;
+}
+
+// Fase 3.2 — espejo de netlify/functions/_lib/costeo.js (servidor). Se
+// mantienen sincronizadas a mano; sirve para la vista previa antes de
+// guardar, el servidor recalcula con autoridad al escribir.
+// carillas = hojas: asumimos impresión a una faz (ver nota en costeo.js).
+export function tarifaVigente(tarifas: Tarifa[], tipo: Tarifa['tipo'], clave: string, fecha: string): number {
+  if (!clave) return 0;
+  const candidatas = tarifas
+    .filter((t) => t.tipo === tipo && t.clave === clave && t.activo !== false && t.vigente_desde <= fecha)
+    .sort((a, b) => (a.vigente_desde < b.vigente_desde ? 1 : -1));
+  return candidatas[0]?.valor || 0;
+}
+
+export function calcularCostoMateriales(
+  tarifas: Tarifa[],
+  venta: { hojas: number; cantidad: number; maquina: string; material: string; terminacion: string; fecha: string },
+): number {
+  const tarifaPapel = tarifaVigente(tarifas, 'papel', venta.material, venta.fecha);
+  const tarifaTinta = tarifaVigente(tarifas, 'tinta', venta.maquina, venta.fecha);
+  const tarifaTerminacion = venta.terminacion
+    ? tarifaVigente(tarifas, 'terminacion', venta.terminacion, venta.fecha) : 0;
+  return (venta.hojas || 0) * (tarifaPapel + tarifaTinta) + (venta.cantidad || 0) * tarifaTerminacion;
+}
+
+// La venta más reciente de un cliente, para "Repetir última venta".
+export function ultimaVentaDeCliente(d: Dataset, clienteId: string): Venta | null {
+  const ventas = d.ventas
+    .filter((v) => v.cliente_id === clienteId)
+    .sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0));
+  return ventas[0] || null;
+}
 
 export function mesesConDatos(d: Dataset): number[] {
   const s = new Set<number>();
@@ -55,14 +120,17 @@ export type ResumenMes = {
 
 export function resumenDelMes(d: Dataset, mes: number): ResumenMes {
   const ventas = d.ventas.filter((v) => claveMes(v.fecha) === mes);
+  // precio_especial (amigo/canje/promo) queda afuera de facturación, costo,
+  // margen y ticket — no de trabajos, horas o envíos, que son actividad real.
+  const rentables = ventas.filter((v) => !v.precio_especial);
   const gastos = d.gastos.filter((g) => claveMes(g.fecha) === mes);
 
   const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
   const gastoDe = (cat: string) =>
     sum(gastos.filter((g) => g.categoria === cat).map((g) => g.monto || 0));
 
-  const facturacion = sum(ventas.map((v) => v.precio || 0));
-  const costoMateriales = sum(ventas.map((v) => v.costo_materiales || 0));
+  const facturacion = sum(rentables.map((v) => v.precio || 0));
+  const costoMateriales = sum(rentables.map((v) => v.costo_materiales || 0));
   const margenBruto = facturacion - costoMateriales;
   const minutos = sum(ventas.map(minutosDe));
   const horas = minutos / 60;
@@ -80,7 +148,7 @@ export function resumenDelMes(d: Dataset, mes: number): ResumenMes {
     costoMateriales,
     margenBruto,
     margenPct: facturacion ? margenBruto / facturacion : null,
-    ticket: ventas.length ? facturacion / ventas.length : null,
+    ticket: rentables.length ? facturacion / rentables.length : null,
     minutos,
     horas,
     margenPorHora: horas ? margenBruto / horas : null,
@@ -164,8 +232,23 @@ export function horasPorSemana(d: Dataset, mes: number) {
 export const ventasPorCanal = (d: Dataset, mes: number) =>
   agrupar(d.ventas.filter((v) => claveMes(v.fecha) === mes), (v) => v.canal, (v) => v.precio || 0);
 
-export const minutosPorEtapa = (d: Dataset, mes: number) =>
-  agrupar(d.ventas.filter((v) => claveMes(v.fecha) === mes), (v) => v.etapa, minutosDe);
+// Reemplaza a minutosPorEtapa (Fase 4): "etapa" era un solo campo de texto
+// libre por venta, adivinado, y ya generó conclusiones equivocadas. Los tres
+// campos de minutos estructurados dicen lo mismo, mejor.
+export function minutosPorTipo(d: Dataset, mes: number) {
+  const ventas = d.ventas.filter((v) => claveMes(v.fecha) === mes);
+  const filas = [
+    { etiqueta: 'Impresión', total: 0, cantidad: 0 },
+    { etiqueta: 'Corte y terminación', total: 0, cantidad: 0 },
+    { etiqueta: 'Archivo y atención', total: 0, cantidad: 0 },
+  ];
+  for (const v of ventas) {
+    if (v.min_impresion) { filas[0].total += v.min_impresion; filas[0].cantidad += 1; }
+    if (v.min_corte) { filas[1].total += v.min_corte; filas[1].cantidad += 1; }
+    if (v.min_archivo) { filas[2].total += v.min_archivo; filas[2].cantidad += 1; }
+  }
+  return filas.filter((f) => f.total > 0).sort((a, b) => b.total - a.total);
+}
 
 export const gastosPorCategoria = (d: Dataset, mes: number) =>
   agrupar(d.gastos.filter((g) => claveMes(g.fecha) === mes), (g) => g.categoria, (g) => g.monto || 0);
@@ -186,7 +269,9 @@ export type FilaProducto = {
 // Dinámico: sale de las ventas del mes, no de una lista fija.
 // Un producto nuevo aparece acá sin tocar código.
 export function porProducto(d: Dataset, mes: number): FilaProducto[] {
-  const ventas = d.ventas.filter((v) => claveMes(v.fecha) === mes);
+  // precio_especial (amigo/canje/promo) queda afuera: es un análisis de
+  // precio y margen, exactamente lo que esas ventas no representan bien.
+  const ventas = d.ventas.filter((v) => claveMes(v.fecha) === mes && !v.precio_especial);
   const total = ventas.reduce((a, v) => a + (v.precio || 0), 0);
   const m = new Map<string, Venta[]>();
   ventas.forEach((v) => {
@@ -238,7 +323,10 @@ export function fichaClientes(d: Dataset, hoyISO: string): FilaCliente[] {
   return d.clientes.map((c) => {
     const vs = porCliente.get(c.id) || porCliente.get(c.nombre) || [];
     const compras = (c.hist_compras || 0) + vs.length;
-    const facturacion = (c.hist_facturacion || 0) + vs.reduce((a, v) => a + (v.precio || 0), 0);
+    // La facturación no cuenta las ventas precio_especial (amigo/canje/promo);
+    // las compras sí, porque la visita fue real aunque el precio no.
+    const facturacion = (c.hist_facturacion || 0)
+      + vs.filter((v) => !v.precio_especial).reduce((a, v) => a + (v.precio || 0), 0);
     const fechas = [c.hist_ultima_compra, ...vs.map((v) => v.fecha)].filter(Boolean).sort();
     const ultimaCompra = fechas[fechas.length - 1] || '';
     const dias = ultimaCompra

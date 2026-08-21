@@ -8,17 +8,23 @@ export type Venta = {
   precio: number;             // sin envío
   envio_cobrado: number;
   costo_materiales: number;
-  costo_expresion: string;
   min_impresion: number;
   min_corte: number;
   min_archivo: number;
   canal: string;
-  etapa: string;
   notas: string;
   telefono: string;
   creado_en: string;
   actualizado_en: string;
   activo: boolean;
+  completo: boolean;       // false = cargada por "Captura rápida", falta terminar
+  hojas: number;
+  maquina: string;
+  material: string;
+  terminacion: string;
+  costo_materiales_override: boolean; // true = costo_materiales corregido a mano
+  precio_especial: boolean; // amigo/canje/promo: se excluye de los análisis de rentabilidad
+  costo_envio: number;
 };
 
 export type Gasto = {
@@ -47,6 +53,31 @@ export type Cliente = {
   activo: boolean;
 };
 
+export type Plantilla = {
+  id: string;
+  nombre: string;
+  producto: string;
+  maquina: string;
+  material: string;
+  hojas_por_unidad: number;
+  min_impresion_por_unidad: number;
+  min_corte_por_unidad: number;
+  min_archivo_fijo: number;
+  terminacion: string;
+  orden: number;
+  activo: boolean;
+};
+
+export type Tarifa = {
+  id: string;
+  tipo: 'papel' | 'tinta' | 'terminacion';
+  clave: string;
+  valor: number;
+  unidad: string;
+  vigente_desde: string;
+  activo: boolean;
+};
+
 export type ItemLista = {
   tipo: 'producto' | 'canal' | 'etapa' | 'categoria_gasto' | 'tipo_gasto';
   valor: string;
@@ -67,5 +98,7 @@ export type Dataset = {
   clientes: Cliente[];
   listas: ItemLista[];
   historico: FilaHistorica[];
+  plantillas: Plantilla[];
+  tarifas: Tarifa[];
   leidoEn: string;
 };

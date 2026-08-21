@@ -1,13 +1,14 @@
 'use client';
 
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { useDatos } from '@/lib/data-context';
 import {
   MARGEN_MINIMO, PUBLICIDAD_MAXIMA, gastosFijosFaltantes, gastosPorCategoria, horasPorSemana,
-  mesesConDatos, minutosPorEtapa, resumenDelMes, serieMensual, ventasPorCanal, ventasPorDia,
+  mesesConDatos, minutosPorTipo, resumenDelMes, serieMensual, ventasPorCanal, ventasPorDia,
 } from '@/lib/calc';
 import { money, num, pct, nombreMes } from '@/lib/format';
-import { Aviso, Cargando, Kpi, Seccion, Segmentado, Tarjeta, Titulo } from '@/components/ui';
+import { Aviso, Boton, Cargando, Kpi, Seccion, Segmentado, Tarjeta, Titulo } from '@/components/ui';
 import MesSelector from '@/components/MesSelector';
 import Barras from '@/components/Barras';
 import Donut from '@/components/Donut';
@@ -51,7 +52,7 @@ export default function Panel() {
   const margenFlojo = r.margenPct !== null && r.margenPct < MARGEN_MINIMO;
   const publicidadAlta =
     r.publicidadSobreFacturacion !== null && r.publicidadSobreFacturacion > PUBLICIDAD_MAXIMA;
-  const etapas = minutosPorEtapa(data, mesActivo);
+  const etapas = minutosPorTipo(data, mesActivo);
   const cuello = etapas[0];
   const canales = ventasPorCanal(data, mesActivo);
   const gastosCat = gastosPorCategoria(data, mesActivo);
@@ -65,6 +66,19 @@ export default function Panel() {
 
   return (
     <>
+      <div className="mb-6 flex flex-wrap gap-3">
+        <Link href="/ventas/nueva/">
+          <Boton tipo="primario">+ Cargar venta</Boton>
+        </Link>
+        <Link href="/gastos/nuevo/">
+          <Boton>+ Cargar gasto</Boton>
+        </Link>
+      </div>
+
+      {/* Fases siguientes suman tarjetas acá: Pendientes de completar (Fase 1.2),
+          Clientes a reactivar (Fase 2), Resultado del mes recalculado (Fase 5),
+          Publicidad invertido vs. atribuido (Fase 5.2/5.3). */}
+
       <Titulo
         subtitulo="Facturación, márgenes y gastos del mes seleccionado"
         accion={<MesSelector meses={meses} valor={mesActivo} onChange={setMes} />}
@@ -110,7 +124,12 @@ export default function Panel() {
           <Kpi etiqueta="Ticket promedio" valor={money(r.ticket)} nota="Subirlo es lo más rentable que podés hacer." cambio={cambioDe(r.ticket, rAnterior?.ticket ?? null)} />
           <Kpi etiqueta="Costo de materiales" valor={money(r.costoMateriales)} />
           <Kpi etiqueta="Margen bruto" valor={money(r.margenBruto)} nota="Antes de publicidad, cuotas y gastos fijos." />
-          <Kpi etiqueta="Margen bruto %" valor={pct(r.margenPct)} tono={margenFlojo ? 'alerta' : 'normal'} />
+          <Kpi
+            etiqueta="Margen bruto %"
+            valor={pct(r.margenPct)}
+            nota="Sobre el costo de materiales solamente. No es la rentabilidad del negocio."
+            tono={margenFlojo ? 'alerta' : 'normal'}
+          />
           <Kpi etiqueta="Horas de producción" valor={num(r.horas, 1)} />
         </div>
       </Seccion>
