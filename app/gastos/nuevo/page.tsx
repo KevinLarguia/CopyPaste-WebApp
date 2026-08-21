@@ -5,10 +5,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useDatos } from '@/lib/data-context';
 import { api, ErrorApi } from '@/lib/api';
 import { evaluarExpresion, esExpresion, hoy, money } from '@/lib/format';
-import { NO_OPERATIVAS } from '@/lib/calc';
+import { CAT_PUBLICIDAD, NO_OPERATIVAS } from '@/lib/calc';
 import { Aviso, Boton, Campo, Input, Select, Titulo, claseInput } from '@/components/ui';
 
-const VACIO = { fecha: hoy(), categoria: '', detalle: '', monto: '', proveedor: '', tipo: 'Variable' };
+const VACIO = {
+  fecha: hoy(), categoria: '', detalle: '', monto: '', proveedor: '', tipo: 'Variable',
+  estado: 'pagado', anuncio: '',
+};
 
 function Formulario() {
   const router = useRouter();
@@ -28,6 +31,7 @@ function Formulario() {
     setF({
       fecha: g.fecha, categoria: g.categoria, detalle: g.detalle,
       monto: String(g.monto ?? ''), proveedor: g.proveedor, tipo: g.tipo || 'Variable',
+      estado: g.estado || 'pagado', anuncio: g.anuncio || '',
     });
     setCargado(true);
   }, [idEditar, data.gastos, cargado]);
@@ -47,6 +51,8 @@ function Formulario() {
         ...(idEditar ? { id: idEditar } : {}),
         fecha: f.fecha, categoria: f.categoria, detalle: f.detalle.trim(),
         monto, proveedor: f.proveedor.trim(), tipo: f.tipo,
+        estado: f.estado,
+        anuncio: f.categoria === CAT_PUBLICIDAD ? f.anuncio.trim() : '',
       };
       if (idEditar) await api.editar('gastos', payload);
       else await api.crear('gastos', payload);
@@ -89,6 +95,14 @@ function Formulario() {
           </Select>
         </Campo>
 
+        <Campo etiqueta="Estado" hint="Solo un gasto pagado resta del resultado del mes.">
+          <Select value={f.estado} onChange={(e) => set('estado', e.target.value)}>
+            <option value="pedido">Pedido</option>
+            <option value="recibido">Recibido</option>
+            <option value="pagado">Pagado</option>
+          </Select>
+        </Campo>
+
         <Campo etiqueta="Detalle" ancho="full">
           <Input value={f.detalle} onChange={(e) => set('detalle', e.target.value)} placeholder="Resma A4 x5" />
         </Campo>
@@ -96,6 +110,12 @@ function Formulario() {
         <Campo etiqueta="Proveedor o medio de pago" ancho="full">
           <Input value={f.proveedor} onChange={(e) => set('proveedor', e.target.value)} placeholder="Visual Insumos" />
         </Campo>
+
+        {f.categoria === CAT_PUBLICIDAD && (
+          <Campo etiqueta="Anuncio" ancho="full" hint="Qué anuncio o campaña consumió este gasto.">
+            <Input value={f.anuncio} onChange={(e) => set('anuncio', e.target.value)} placeholder="Promo agosto" />
+          </Campo>
+        )}
       </div>
 
       {NO_OPERATIVAS.includes(f.categoria) && (
@@ -103,7 +123,9 @@ function Formulario() {
           <Aviso tono="alerta">
             {f.categoria === 'Envíos'
               ? 'Los envíos no cuentan como gasto operativo: se comparan contra lo que cobrás de envío en cada venta.'
-              : 'Los retiros no cuentan como gasto operativo: es plata de los socios, no del negocio.'}
+              : f.categoria === 'Saldo publicitario (carga)'
+                ? 'Cargar saldo no cuenta como gasto operativo todavía: es plata que pasó a la cuenta de Meta, no que se gastó. Se descuenta recién cuando la cargás como "Publicidad Meta (consumo)".'
+                : 'Los retiros no cuentan como gasto operativo: es plata de los socios, no del negocio.'}
           </Aviso>
         </div>
       )}

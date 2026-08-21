@@ -13,10 +13,7 @@ import {
   Aviso, Boton, Campo, Input, Select, Titulo, claseInput,
 } from '@/components/ui';
 import ClienteAutocomplete from '@/components/ClienteAutocomplete';
-
-// Máquinas físicas del local. El costo de tinta depende de cuál se usó, no
-// del producto — por eso es un campo propio y no algo que venga de listas.
-const MAQUINAS = ['J6955', 'L5590', 'T3170'];
+import { MAQUINAS } from '@/lib/constants';
 
 const VACIO = {
   fecha: hoy(), cliente_id: '', cliente_nombre: '', producto: '', cantidad: '1',

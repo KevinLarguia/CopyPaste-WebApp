@@ -38,6 +38,8 @@ export type Gasto = {
   creado_en: string;
   actualizado_en: string;
   activo: boolean;
+  estado: 'pedido' | 'recibido' | 'pagado' | '';
+  anuncio: string;             // solo tiene sentido para la categoría de consumo publicitario
 };
 
 export type Cliente = {
@@ -85,6 +87,15 @@ export type ItemLista = {
   activo: boolean;
 };
 
+export type Contador = {
+  id: string;
+  fecha: string;
+  maquina: string;
+  contador_bn: number;
+  contador_color: number;
+  activo: boolean;
+};
+
 export type FilaHistorica = {
   concepto: string;
   mayo_2026: string | number;
@@ -100,5 +111,6 @@ export type Dataset = {
   historico: FilaHistorica[];
   plantillas: Plantilla[];
   tarifas: Tarifa[];
+  contadores: Contador[];
   leidoEn: string;
 };

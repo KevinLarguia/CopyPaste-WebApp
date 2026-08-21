@@ -23,7 +23,7 @@ const SHEETS = {
   },
   gastos: {
     columns: ['id', 'fecha', 'categoria', 'detalle', 'monto', 'proveedor',
-      'tipo', 'creado_en', 'actualizado_en', 'activo'],
+      'tipo', 'creado_en', 'actualizado_en', 'activo', 'estado', 'anuncio'],
     numeric: ['monto'],
     required: ['fecha', 'categoria', 'monto'],
   },
@@ -62,6 +62,11 @@ const SHEETS = {
     numeric: [],
     required: [],
     readOnly: true,
+  },
+  contadores: {
+    columns: ['id', 'fecha', 'maquina', 'contador_bn', 'contador_color', 'activo'],
+    numeric: ['contador_bn', 'contador_color'],
+    required: ['fecha', 'maquina'],
   },
 };
 

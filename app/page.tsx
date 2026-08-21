@@ -75,10 +75,6 @@ export default function Panel() {
         </Link>
       </div>
 
-      {/* Fases siguientes suman tarjetas acá: Pendientes de completar (Fase 1.2),
-          Clientes a reactivar (Fase 2), Resultado del mes recalculado (Fase 5),
-          Publicidad invertido vs. atribuido (Fase 5.2/5.3). */}
-
       <Titulo
         subtitulo="Facturación, márgenes y gastos del mes seleccionado"
         accion={<MesSelector meses={meses} valor={mesActivo} onChange={setMes} />}
@@ -152,7 +148,7 @@ export default function Panel() {
         </Tarjeta>
       </Seccion>
 
-      <Seccion titulo="Resultado" nota="Facturación menos la plata que efectivamente salió.">
+      <Seccion titulo="Resultado" nota="Facturación menos costo de materiales menos gastos operativos ya pagados.">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Kpi
             etiqueta="Resultado del mes"
@@ -160,9 +156,21 @@ export default function Panel() {
             tono={r.resultado >= 0 ? 'pos' : 'neg'}
             grande
           />
-          <Kpi etiqueta="Gastos operativos" valor={money(r.gastosOperativos)} nota="Sin retiros ni envíos." />
+          <Kpi etiqueta="Gastos operativos" valor={money(r.gastosOperativos)} nota="Pagados. Sin retiros, envíos ni carga publicitaria." />
           <Kpi etiqueta="Publicidad en Meta" valor={money(r.publicidad)} nota={`${pct(r.publicidadSobreFacturacion)} de la facturación`} tono={publicidadAlta ? 'alerta' : 'normal'} />
           <Kpi etiqueta="Retiros de socios" valor={money(r.retiros)} />
+        </div>
+      </Seccion>
+
+      <Seccion titulo="Publicidad: invertido vs. atribuido" nota="Cargar saldo no es gastarlo: solo cuenta como gasto lo que Meta ya consumió.">
+        <div className="grid grid-cols-3 gap-3">
+          <Kpi etiqueta="Invertido (carga)" valor={money(r.publicidadCargada)} />
+          <Kpi etiqueta="Atribuido (consumo)" valor={money(r.publicidad)} />
+          <Kpi
+            etiqueta="Saldo restante"
+            valor={money(r.publicidadCargada - r.publicidad)}
+            tono={r.publicidadCargada - r.publicidad < 0 ? 'alerta' : 'normal'}
+          />
         </div>
       </Seccion>
 
