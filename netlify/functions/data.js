@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     }
 
     const data = await readAll([
-      'ventas', 'gastos', 'clientes', 'listas', 'historico_mensual',
+      'ventas', 'gastos', 'clientes', 'listas', 'historico_mensual', 'plantillas',
     ]);
 
     const value = {
@@ -33,6 +33,7 @@ exports.handler = async (event) => {
       clientes: data.clientes || [],
       listas: data.listas || [],
       historico: data.historico_mensual || [],
+      plantillas: data.plantillas || [],
       leidoEn: new Date().toISOString(),
     };
     cache.set('data', { at: Date.now(), value });

@@ -1,5 +1,5 @@
 import { hoy } from './format';
-import type { Cliente, Dataset, Gasto, Venta } from './types';
+import type { Cliente, Dataset, Gasto, Plantilla, Venta } from './types';
 
 // Categorías que NO son gasto operativo. Regla del negocio, no técnica:
 // el retiro es plata de los socios y el envío lo paga el cliente.
@@ -23,6 +23,48 @@ export const minutosDe = (v: Venta) =>
   (v.min_impresion || 0) + (v.min_corte || 0) + (v.min_archivo || 0);
 
 export const margenDe = (v: Venta) => (v.precio || 0) - (v.costo_materiales || 0);
+
+// Minutos y hojas que sugiere una plantilla para una cantidad dada. Los
+// minutos de impresión y corte escalan con la cantidad, el archivo es fijo
+// por trabajo (armar el arte no depende de cuántas unidades salen).
+export function aplicarPlantilla(pl: Plantilla, cantidad: number) {
+  const c = cantidad || 0;
+  return {
+    hojas: (pl.hojas_por_unidad || 0) * c,
+    min_impresion: Math.round((pl.min_impresion_por_unidad || 0) * c),
+    min_corte: Math.round((pl.min_corte_por_unidad || 0) * c),
+    min_archivo: pl.min_archivo_fijo || 0,
+  };
+}
+
+// Solo dígitos, para comparar teléfonos escritos con distinto formato.
+// Fase 2 va a reemplazar esto por una normalización completa (código de país,
+// 9 móvil, etc.); acá alcanza con un match best-effort.
+const soloDigitos = (s: string) => String(s || '').replace(/\D/g, '');
+
+export function clientePorTelefono(clientes: Cliente[], telefono: string): Cliente | null {
+  const d = soloDigitos(telefono);
+  if (d.length < 6) return null;
+  return clientes.find((c) => soloDigitos(c.telefono) && soloDigitos(c.telefono) === d) || null;
+}
+
+// Último precio que un cliente pagó por un producto puntual: sirve como
+// sugerencia al cargar, no se guarda solo. `null` si nunca lo compró.
+export function ultimoPrecioProducto(d: Dataset, clienteId: string, producto: string): number | null {
+  if (!clienteId || !producto) return null;
+  const ventas = d.ventas
+    .filter((v) => v.cliente_id === clienteId && v.producto === producto)
+    .sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0));
+  return ventas[0]?.precio ?? null;
+}
+
+// La venta más reciente de un cliente, para "Repetir última venta".
+export function ultimaVentaDeCliente(d: Dataset, clienteId: string): Venta | null {
+  const ventas = d.ventas
+    .filter((v) => v.cliente_id === clienteId)
+    .sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0));
+  return ventas[0] || null;
+}
 
 export function mesesConDatos(d: Dataset): number[] {
   const s = new Set<number>();

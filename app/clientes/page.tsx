@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { useDatos } from '@/lib/data-context';
 import { api, ErrorApi } from '@/lib/api';
 import { fichaClientes, type FilaCliente } from '@/lib/calc';
@@ -111,7 +112,7 @@ export default function Clientes() {
             { texto: 'Cliente' }, { texto: 'Teléfono' },
             { texto: 'Compras', alineado: 'der' }, { texto: 'Facturación', alineado: 'der' },
             { texto: 'Ticket', alineado: 'der' }, { texto: 'Última' },
-            { texto: 'Días', alineado: 'der' }, { texto: 'Estado' },
+            { texto: 'Días', alineado: 'der' }, { texto: 'Estado' }, { texto: '' },
           ]}
         >
           {filtrados.slice(0, 300).map((c) => (
@@ -148,6 +149,11 @@ export default function Clientes() {
               <Celda mono className="whitespace-nowrap text-muted">{fechaCorta(c.ultimaCompra)}</Celda>
               <Celda der mono>{c.diasSinComprar ?? '—'}</Celda>
               <Celda className={`whitespace-nowrap text-xs ${colorEstado(c.estado)}`}>{c.estado}</Celda>
+              <Celda der>
+                <Link href={`/clientes/detalle/?id=${c.id}`} className="text-xs underline underline-offset-2 hover:text-spot">
+                  Ver
+                </Link>
+              </Celda>
             </Fila>
           ))}
         </Tabla>

@@ -8,10 +8,18 @@ import { useDatos } from '@/lib/data-context';
 
 const SECCIONES = [
   {
+    grupo: 'Inicio',
+    items: [
+      { href: '/', texto: 'Panel del mes' },
+    ],
+  },
+  {
     grupo: 'Todos los días',
     items: [
       { href: '/ventas/nueva/', texto: 'Cargar venta' },
+      { href: '/ventas/rapida/', texto: 'Cargar rápido' },
       { href: '/gastos/nuevo/', texto: 'Cargar gasto' },
+      { href: '/ventas/pendientes/', texto: 'Pendientes de completar' },
     ],
   },
   {
@@ -25,7 +33,6 @@ const SECCIONES = [
   {
     grupo: 'Análisis',
     items: [
-      { href: '/', texto: 'Panel del mes' },
       { href: '/productos/', texto: 'Por producto' },
       { href: '/evolucion/', texto: 'Evolución' },
     ],

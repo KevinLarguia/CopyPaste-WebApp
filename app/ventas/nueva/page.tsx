@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useDatos } from '@/lib/data-context';
 import { api, ErrorApi } from '@/lib/api';
 import { evaluarExpresion, esExpresion, hoy, money } from '@/lib/format';
+import { aplicarPlantilla, clientePorTelefono, ultimoPrecioProducto } from '@/lib/calc';
 import {
   Aviso, Boton, Campo, Input, Select, Titulo, claseInput,
 } from '@/components/ui';
@@ -21,12 +22,15 @@ function Formulario() {
   const router = useRouter();
   const params = useSearchParams();
   const idEditar = params.get('id');
+  const idRepetir = params.get('repetir');
   const { data, recargar, opciones } = useDatos();
 
   const [f, setF] = useState({ ...VACIO });
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cargado, setCargado] = useState(false);
+  const [plantillaId, setPlantillaId] = useState('');
+  const [minutosTocados, setMinutosTocados] = useState(false);
 
   // Modo edición: se completa una vez, cuando llegan los datos.
   useEffect(() => {
@@ -46,7 +50,67 @@ function Formulario() {
     setCargado(true);
   }, [idEditar, data.ventas, cargado]);
 
+  // "Repetir última venta": precarga desde una venta pasada pero SIN idEditar,
+  // así Guardar crea una venta nueva en vez de pisar la anterior.
+  useEffect(() => {
+    if (!idRepetir || idEditar || cargado) return;
+    const v = data.ventas.find((x) => x.id === idRepetir);
+    if (!v) return;
+    setF({
+      fecha: hoy(), cliente_id: v.cliente_id, cliente_nombre: v.cliente_nombre,
+      producto: v.producto, cantidad: String(v.cantidad ?? ''), precio: String(v.precio ?? ''),
+      envio_cobrado: '0',
+      costo_materiales: '', costo_expresion: '',
+      min_impresion: String(v.min_impresion || ''), min_corte: String(v.min_corte || ''),
+      min_archivo: String(v.min_archivo || ''), canal: v.canal, etapa: '',
+      notas: '', telefono: v.telefono,
+    });
+    setCargado(true);
+  }, [idRepetir, idEditar, data.ventas, cargado]);
+
   const set = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
+
+  // Elegir una plantilla precarga producto + minutos según la cantidad.
+  // Mientras haya una plantilla elegida y no se hayan tocado los minutos a
+  // mano, cambiar la cantidad los vuelve a calcular.
+  useEffect(() => {
+    if (!plantillaId || minutosTocados) return;
+    const pl = data.plantillas.find((p) => p.id === plantillaId);
+    if (!pl) return;
+    const r = aplicarPlantilla(pl, Number(f.cantidad) || 0);
+    setF((p) => ({
+      ...p,
+      producto: pl.producto,
+      min_impresion: String(r.min_impresion),
+      min_corte: String(r.min_corte),
+      min_archivo: String(r.min_archivo),
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plantillaId, f.cantidad, minutosTocados]);
+
+  const setMinutos = (k: 'min_impresion' | 'min_corte' | 'min_archivo', v: string) => {
+    setMinutosTocados(true);
+    set(k, v);
+  };
+
+  // Canal por defecto si el teléfono ya pertenece a un cliente conocido.
+  // Best-effort acá (match por dígitos); la Fase 2 lo vuelve autoritativo.
+  useEffect(() => {
+    if (f.canal || !f.telefono) return;
+    if (clientePorTelefono(data.clientes, f.telefono)) set('canal', 'Cliente que ya compró');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [f.telefono, data.clientes]);
+
+  // Sugerencia de precio: lo último que le cobraste a este cliente por este
+  // producto. Si el campo está vacío lo precarga; si no, solo lo muestra.
+  const precioSugerido = useMemo(
+    () => ultimoPrecioProducto(data, f.cliente_id, f.producto),
+    [data, f.cliente_id, f.producto],
+  );
+  useEffect(() => {
+    if (precioSugerido !== null && !f.precio) set('precio', String(precioSugerido));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [precioSugerido]);
 
   // El campo de costo acepta cuentas: "15*127+200". Se guarda el número
   // resuelto y también la cuenta, para saber después de dónde salió.
@@ -81,6 +145,7 @@ function Formulario() {
       min_corte: Number(f.min_corte) || 0,
       min_archivo: Number(f.min_archivo) || 0,
       canal: f.canal, etapa: f.etapa, notas: f.notas.trim(), telefono: f.telefono.trim(),
+      completo: true,
     };
 
     setGuardando(true);
@@ -131,6 +196,19 @@ function Formulario() {
           />
         </Campo>
 
+        <Campo etiqueta="Plantilla" hint="Precarga producto y minutos. Opcional.">
+          <Select
+            value={plantillaId}
+            onChange={(e) => { setPlantillaId(e.target.value); setMinutosTocados(false); }}
+          >
+            <option value="">Sin plantilla</option>
+            {data.plantillas
+              .filter((p) => p.activo !== false)
+              .sort((a, b) => (a.orden || 0) - (b.orden || 0))
+              .map((p) => <option key={p.id} value={p.id}>{p.nombre}</option>)}
+          </Select>
+        </Campo>
+
         <Campo etiqueta="Producto o servicio">
           <Select value={f.producto} onChange={(e) => set('producto', e.target.value)}>
             <option value="">Elegí uno</option>
@@ -142,7 +220,14 @@ function Formulario() {
           <Input type="number" inputMode="numeric" min="0" value={f.cantidad} onChange={(e) => set('cantidad', e.target.value)} />
         </Campo>
 
-        <Campo etiqueta="Precio cobrado" hint="Sin el envío. Si lo sumás acá, la facturación queda inflada.">
+        <Campo
+          etiqueta="Precio cobrado"
+          hint={
+            precioSugerido !== null
+              ? `Última vez le cobraste ${money(precioSugerido)} por esto. Sin el envío.`
+              : 'Sin el envío. Si lo sumás acá, la facturación queda inflada.'
+          }
+        >
           <Input type="number" inputMode="decimal" min="0" value={f.precio} onChange={(e) => set('precio', e.target.value)} placeholder="0" />
         </Campo>
 
@@ -176,13 +261,13 @@ function Formulario() {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <Campo etiqueta="Impresión">
-          <Input type="number" inputMode="numeric" min="0" value={f.min_impresion} onChange={(e) => set('min_impresion', e.target.value)} placeholder="0" />
+          <Input type="number" inputMode="numeric" min="0" value={f.min_impresion} onChange={(e) => setMinutos('min_impresion', e.target.value)} placeholder="0" />
         </Campo>
         <Campo etiqueta="Corte y terminación">
-          <Input type="number" inputMode="numeric" min="0" value={f.min_corte} onChange={(e) => set('min_corte', e.target.value)} placeholder="0" />
+          <Input type="number" inputMode="numeric" min="0" value={f.min_corte} onChange={(e) => setMinutos('min_corte', e.target.value)} placeholder="0" />
         </Campo>
         <Campo etiqueta="Archivo y atención">
-          <Input type="number" inputMode="numeric" min="0" value={f.min_archivo} onChange={(e) => set('min_archivo', e.target.value)} placeholder="0" />
+          <Input type="number" inputMode="numeric" min="0" value={f.min_archivo} onChange={(e) => setMinutos('min_archivo', e.target.value)} placeholder="0" />
         </Campo>
       </div>
 

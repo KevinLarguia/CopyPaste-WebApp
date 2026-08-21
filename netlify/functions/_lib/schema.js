@@ -7,7 +7,7 @@ const SHEETS = {
       'id', 'fecha', 'cliente_id', 'cliente_nombre', 'producto', 'cantidad',
       'precio', 'envio_cobrado', 'costo_materiales', 'costo_expresion',
       'min_impresion', 'min_corte', 'min_archivo', 'canal', 'etapa', 'notas',
-      'telefono', 'creado_en', 'actualizado_en', 'activo',
+      'telefono', 'creado_en', 'actualizado_en', 'activo', 'completo',
     ],
     numeric: ['cantidad', 'precio', 'envio_cobrado', 'costo_materiales',
       'min_impresion', 'min_corte', 'min_archivo'],
@@ -24,6 +24,16 @@ const SHEETS = {
       'hist_facturacion', 'hist_ultima_compra', 'nombre_dudoso', 'creado_en', 'activo'],
     numeric: ['hist_compras', 'hist_facturacion'],
     required: ['nombre'],
+  },
+  plantillas: {
+    columns: [
+      'id', 'nombre', 'producto', 'maquina', 'material', 'hojas_por_unidad',
+      'min_impresion_por_unidad', 'min_corte_por_unidad', 'min_archivo_fijo',
+      'terminacion', 'orden', 'activo',
+    ],
+    numeric: ['hojas_por_unidad', 'min_impresion_por_unidad', 'min_corte_por_unidad',
+      'min_archivo_fijo', 'orden'],
+    required: ['nombre', 'producto'],
   },
   listas: {
     columns: ['tipo', 'valor', 'orden', 'activo'],

@@ -19,6 +19,7 @@ export type Venta = {
   creado_en: string;
   actualizado_en: string;
   activo: boolean;
+  completo: boolean;       // false = cargada por "Captura rápida", falta terminar
 };
 
 export type Gasto = {
@@ -47,6 +48,21 @@ export type Cliente = {
   activo: boolean;
 };
 
+export type Plantilla = {
+  id: string;
+  nombre: string;
+  producto: string;
+  maquina: string;
+  material: string;
+  hojas_por_unidad: number;
+  min_impresion_por_unidad: number;
+  min_corte_por_unidad: number;
+  min_archivo_fijo: number;
+  terminacion: string;
+  orden: number;
+  activo: boolean;
+};
+
 export type ItemLista = {
   tipo: 'producto' | 'canal' | 'etapa' | 'categoria_gasto' | 'tipo_gasto';
   valor: string;
@@ -67,5 +83,6 @@ export type Dataset = {
   clientes: Cliente[];
   listas: ItemLista[];
   historico: FilaHistorica[];
+  plantillas: Plantilla[];
   leidoEn: string;
 };
