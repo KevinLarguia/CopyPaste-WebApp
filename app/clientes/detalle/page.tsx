@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useDatos } from '@/lib/data-context';
 import { fichaClientes, ultimaVentaDeCliente } from '@/lib/calc';
-import { fechaCorta, hoy, money } from '@/lib/format';
+import { fechaCorta, hoy, money, waLink } from '@/lib/format';
 import {
   Aviso, Boton, Celda, Dinero, Fila, Kpi, Tabla, Titulo, Vacio,
 } from '@/components/ui';
@@ -35,11 +35,14 @@ function Ficha() {
   if (!cliente) return <Vacio>No encontramos ese cliente.</Vacio>;
 
   const ultima = ultimaVentaDeCliente(data, cliente.id);
+  const link = waLink(cliente.telefono);
 
   return (
     <>
       <Titulo
-        subtitulo={cliente.telefono || 'Sin teléfono cargado'}
+        subtitulo={
+          link ? <a href={link} target="_blank" rel="noreferrer" className="underline underline-offset-2">{cliente.telefono}</a> : 'Sin teléfono cargado'
+        }
         accion={
           ultima && (
             <Link href={`/ventas/nueva/?repetir=${ultima.id}`}>

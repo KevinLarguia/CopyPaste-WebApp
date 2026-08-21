@@ -9,7 +9,6 @@ import { Aviso, Boton, Input, Seccion, Titulo } from '@/components/ui';
 const GRUPOS: { tipo: ItemLista['tipo']; titulo: string; nota: string }[] = [
   { tipo: 'producto', titulo: 'Productos y servicios', nota: 'Aparecen al cargar una venta y arman el reporte por producto.' },
   { tipo: 'canal', titulo: 'Canales', nota: 'De dónde llegó el cliente.' },
-  { tipo: 'etapa', titulo: 'Etapas', nota: 'Para marcar qué parte del trabajo más demoró.' },
   { tipo: 'categoria_gasto', titulo: 'Categorías de gasto', nota: 'Ojo: “Envíos” y “Retiro de socios” tienen tratamiento especial en el panel.' },
   { tipo: 'tipo_gasto', titulo: 'Fijo o variable', nota: 'Solo hacen falta estas dos.' },
 ];

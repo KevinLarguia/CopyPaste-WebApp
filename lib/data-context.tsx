@@ -5,7 +5,8 @@ import { api, ErrorApi } from './api';
 import type { Dataset, ItemLista } from './types';
 
 const VACIO: Dataset = {
-  ventas: [], gastos: [], clientes: [], listas: [], historico: [], plantillas: [], leidoEn: '',
+  ventas: [], gastos: [], clientes: [], listas: [], historico: [], plantillas: [], tarifas: [],
+  leidoEn: '',
 };
 
 type Estado = {

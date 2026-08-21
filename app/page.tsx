@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 import { useDatos } from '@/lib/data-context';
 import {
   MARGEN_MINIMO, PUBLICIDAD_MAXIMA, gastosFijosFaltantes, gastosPorCategoria, horasPorSemana,
-  mesesConDatos, minutosPorEtapa, resumenDelMes, serieMensual, ventasPorCanal, ventasPorDia,
+  mesesConDatos, minutosPorTipo, resumenDelMes, serieMensual, ventasPorCanal, ventasPorDia,
 } from '@/lib/calc';
 import { money, num, pct, nombreMes } from '@/lib/format';
 import { Aviso, Boton, Cargando, Kpi, Seccion, Segmentado, Tarjeta, Titulo } from '@/components/ui';
@@ -52,7 +52,7 @@ export default function Panel() {
   const margenFlojo = r.margenPct !== null && r.margenPct < MARGEN_MINIMO;
   const publicidadAlta =
     r.publicidadSobreFacturacion !== null && r.publicidadSobreFacturacion > PUBLICIDAD_MAXIMA;
-  const etapas = minutosPorEtapa(data, mesActivo);
+  const etapas = minutosPorTipo(data, mesActivo);
   const cuello = etapas[0];
   const canales = ventasPorCanal(data, mesActivo);
   const gastosCat = gastosPorCategoria(data, mesActivo);

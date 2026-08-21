@@ -3,15 +3,23 @@
 
 const SHEETS = {
   ventas: {
+    // "etapa" y "costo_expresion" NO estan mas (Fase 4): se sacaron a
+    // proposito de la planilla real con scripts/migrate-fase4-ventas-shape.js
+    // ANTES de desplegar este archivo. Si este schema.js llega a produccion
+    // sin que esas dos columnas se hayan borrado fisicamente de la hoja,
+    // todo lo que viene despues de "canal" en la planilla real se lee y
+    // escribe corrido de lugar. Ver CAMBIOS.md / scripts/ antes de deployar.
     columns: [
       'id', 'fecha', 'cliente_id', 'cliente_nombre', 'producto', 'cantidad',
-      'precio', 'envio_cobrado', 'costo_materiales', 'costo_expresion',
-      'min_impresion', 'min_corte', 'min_archivo', 'canal', 'etapa', 'notas',
+      'precio', 'envio_cobrado', 'costo_materiales',
+      'min_impresion', 'min_corte', 'min_archivo', 'canal', 'notas',
       'telefono', 'creado_en', 'actualizado_en', 'activo', 'completo',
+      'hojas', 'maquina', 'material', 'terminacion', 'costo_materiales_override',
+      'precio_especial', 'costo_envio',
     ],
     numeric: ['cantidad', 'precio', 'envio_cobrado', 'costo_materiales',
-      'min_impresion', 'min_corte', 'min_archivo'],
-    required: ['fecha', 'cliente_nombre', 'producto', 'precio'],
+      'min_impresion', 'min_corte', 'min_archivo', 'hojas', 'costo_envio'],
+    required: ['fecha', 'cliente_nombre', 'producto', 'precio', 'telefono'],
   },
   gastos: {
     columns: ['id', 'fecha', 'categoria', 'detalle', 'monto', 'proveedor',
@@ -24,6 +32,14 @@ const SHEETS = {
       'hist_facturacion', 'hist_ultima_compra', 'nombre_dudoso', 'creado_en', 'activo'],
     numeric: ['hist_compras', 'hist_facturacion'],
     required: ['nombre'],
+  },
+  tarifas: {
+    // Versionada: un cambio de precio agrega una fila nueva con un
+    // `vigente_desde` posterior, nunca edita la vieja in-place. Así una
+    // venta vieja conserva el costo con el que se calculó.
+    columns: ['id', 'tipo', 'clave', 'valor', 'unidad', 'vigente_desde', 'activo'],
+    numeric: ['valor'],
+    required: ['tipo', 'clave', 'valor', 'vigente_desde'],
   },
   plantillas: {
     columns: [

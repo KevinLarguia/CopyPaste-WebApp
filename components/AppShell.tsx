@@ -28,6 +28,7 @@ const SECCIONES = [
       { href: '/ventas/', texto: 'Ventas' },
       { href: '/gastos/', texto: 'Gastos' },
       { href: '/clientes/', texto: 'Clientes' },
+      { href: '/clientes/reactivar/', texto: 'Reactivar clientes' },
     ],
   },
   {

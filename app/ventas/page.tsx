@@ -120,6 +120,9 @@ export default function ListadoVentas() {
               </Celda>
               <Celda>
                 {v.producto}
+                {v.precio_especial && (
+                  <span className="ml-2 text-[10px] uppercase tracking-wide text-spot">precio especial</span>
+                )}
                 {v.notas && <div className="text-xs text-muted">{v.notas}</div>}
               </Celda>
               <Celda der><Dinero v={v.precio} /></Celda>

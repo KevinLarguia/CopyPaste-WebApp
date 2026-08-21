@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useDatos } from '@/lib/data-context';
 import { api, ErrorApi } from '@/lib/api';
-import { aplicarPlantilla, clientePorTelefono } from '@/lib/calc';
+import { aplicarPlantilla, clientePorTelefono, nombreProvisorioDeTelefono } from '@/lib/calc';
 import { hoy } from '@/lib/format';
 import { Aviso, Boton, Campo, Input, Select, Titulo } from '@/components/ui';
 
@@ -42,7 +42,7 @@ export default function CargaRapida() {
       let clienteNombre = conocido?.nombre;
 
       if (!conocido) {
-        const nombreProvisorio = `Cliente ${telefono}`;
+        const nombreProvisorio = nombreProvisorioDeTelefono(telefono);
         const nuevo = await api.crear('clientes', {
           nombre: nombreProvisorio,
           nombre_normalizado: nombreProvisorio
@@ -63,13 +63,18 @@ export default function CargaRapida() {
         cantidad,
         precio,
         envio_cobrado: 0,
+        costo_envio: 0,
         costo_materiales: 0,
-        costo_expresion: '',
+        costo_materiales_override: false,
         min_impresion: r.min_impresion,
         min_corte: r.min_corte,
         min_archivo: r.min_archivo,
+        hojas: r.hojas,
+        maquina: pl.maquina,
+        material: pl.material,
+        terminacion: pl.terminacion,
+        precio_especial: false,
         canal: conocido ? 'Cliente que ya compró' : '',
-        etapa: '',
         notas: '',
         telefono,
         completo: false,

@@ -58,7 +58,10 @@ function rowToObject(sheetName, row) {
     if (numeric.includes(c)) {
       const n = parseFloat(String(raw).replace(',', '.'));
       obj[c] = Number.isFinite(n) ? n : 0;
-    } else if (c === 'activo' || c === 'nombre_dudoso' || c === 'completo') {
+    } else if (
+      c === 'activo' || c === 'nombre_dudoso' || c === 'completo' ||
+      c === 'costo_materiales_override' || c === 'precio_especial'
+    ) {
       obj[c] = String(raw).toUpperCase() !== 'FALSE';
     } else {
       obj[c] = raw;
