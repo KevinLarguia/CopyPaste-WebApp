@@ -6,21 +6,7 @@ const args = inicializar();
 
 const { getClient, readSheet, appendRow, colLetter } = require('../netlify/functions/_lib/sheets');
 const { SHEETS, newId } = require('../netlify/functions/_lib/schema');
-
-// hojas_por_unidad en 0 para "Apunte / cuadernillo anillado": ese trabajo no
-// escala por plancha como los demás, usa el campo `hojas` de la venta
-// directamente (según la spec original). Ese campo recién existe desde la
-// Fase 3 — hasta entonces esta plantilla no aporta hojas, solo minutos.
-const SEMILLA = [
-  { nombre: 'Plancha vinilo A4 troquelada', producto: 'Stickers troquelados / corte de contorno', maquina: 'T3170', material: 'Vinilo', hojas_por_unidad: 1, min_impresion_por_unidad: 2.5, min_corte_por_unidad: 5, min_archivo_fijo: 8, terminacion: '' },
-  { nombre: 'Plancha adhesivo A4 troquelada', producto: 'Stickers troquelados / corte de contorno', maquina: 'L5590', material: 'Adhesivo fotográfico', hojas_por_unidad: 1, min_impresion_por_unidad: 2, min_corte_por_unidad: 5, min_archivo_fijo: 8, terminacion: '' },
-  { nombre: 'Apunte / cuadernillo anillado', producto: 'Cuadernillos / anillados', maquina: 'J6955', material: 'Común', hojas_por_unidad: 0, min_impresion_por_unidad: 0.05, min_corte_por_unidad: 0.02, min_archivo_fijo: 5, terminacion: 'Anillado' },
-  { nombre: 'Fotocopias BN', producto: 'Fotocopias / impresión BN', maquina: 'J6955', material: 'Común', hojas_por_unidad: 0.5, min_impresion_por_unidad: 0.15, min_corte_por_unidad: 0, min_archivo_fijo: 2, terminacion: '' },
-  { nombre: 'Impresión color A4', producto: 'Impresión color A4', maquina: 'J6955', material: 'Común', hojas_por_unidad: 1, min_impresion_por_unidad: 1.75, min_corte_por_unidad: 0, min_archivo_fijo: 3, terminacion: '' },
-  { nombre: 'Impresión A4 papel especial', producto: 'Impresión color A4', maquina: 'L5590', material: 'Fotográfico 200gr', hojas_por_unidad: 1, min_impresion_por_unidad: 2, min_corte_por_unidad: 0, min_archivo_fijo: 3, terminacion: '' },
-  { nombre: 'Impresión color A3', producto: 'Impresión color A3', maquina: 'J6955', material: 'Común', hojas_por_unidad: 1, min_impresion_por_unidad: 3, min_corte_por_unidad: 0, min_archivo_fijo: 2, terminacion: '' },
-  { nombre: 'Polaroids / fotos', producto: 'Polaroids / fotos', maquina: 'L5590', material: 'Fotográfico', hojas_por_unidad: 0.25, min_impresion_por_unidad: 0.5, min_corte_por_unidad: 0.5, min_archivo_fijo: 3, terminacion: '' },
-];
+const { PLANTILLAS_SEMILLA: SEMILLA } = require('./_lib/seed-data');
 
 async function main() {
   const { api, sheetId } = getClient();

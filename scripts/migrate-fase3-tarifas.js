@@ -15,22 +15,7 @@ const args = inicializar();
 
 const { getClient, readSheet, appendRow, colLetter } = require('../netlify/functions/_lib/sheets');
 const { SHEETS, newId } = require('../netlify/functions/_lib/schema');
-
-const VIGENTE_DESDE = '2026-08-01'; // antes de la primera venta real cargada
-
-const TARIFAS_SEMILLA = [
-  { tipo: 'papel', clave: 'Común', valor: 15, unidad: 'por hoja' },
-  { tipo: 'papel', clave: 'Mate 220gr', valor: 200, unidad: 'por hoja' },
-  { tipo: 'papel', clave: '240gr doble faz', valor: 250, unidad: 'por hoja' },
-  { tipo: 'papel', clave: 'Fotográfico 200gr', valor: 133, unidad: 'por hoja' },
-  { tipo: 'papel', clave: 'Vinilo', valor: 510, unidad: 'por hoja' },
-  { tipo: 'papel', clave: 'Adhesivo fotográfico', valor: 0, unidad: 'por hoja (a medir)' },
-  { tipo: 'papel', clave: 'Fotográfico', valor: 0, unidad: 'por hoja (a medir)' },
-  { tipo: 'tinta', clave: 'J6955', valor: 2, unidad: 'por carilla' },
-  { tipo: 'tinta', clave: 'L5590', valor: 0, unidad: 'por carilla (a medir)' },
-  { tipo: 'tinta', clave: 'T3170', valor: 0, unidad: 'por m² (a medir)' },
-  { tipo: 'terminacion', clave: 'Anillado', valor: 200, unidad: 'por unidad' },
-];
+const { TARIFAS_SEMILLA, VIGENTE_DESDE } = require('./_lib/seed-data');
 
 const COLUMNAS_VENTAS_NUEVAS = ['hojas', 'maquina', 'material', 'terminacion', 'costo_materiales_override'];
 
