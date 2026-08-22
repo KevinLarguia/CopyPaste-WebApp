@@ -2,11 +2,18 @@ import { hoy, normalizarTelefono } from './format';
 import type { Cliente, Dataset, Gasto, Plantilla, Tarifa, Venta } from './types';
 
 // Categorías que NO son gasto operativo. Regla del negocio, no técnica:
-// el retiro es plata de los socios y el envío lo paga el cliente.
-export const NO_OPERATIVAS = ['Retiro de socios', 'Envíos'];
-export const CAT_PUBLICIDAD = 'Publicidad Meta';
+// el retiro es plata de los socios, el envío lo paga el cliente, y la carga
+// de saldo publicitario es un movimiento de caja (la plata todavía no se
+// gastó, recién se gasta cuando Meta la consume).
+export const NO_OPERATIVAS = ['Retiro de socios', 'Envíos', 'Saldo publicitario (carga)'];
+export const CAT_PUBLICIDAD = 'Publicidad Meta (consumo)';
+export const CAT_PUBLICIDAD_CARGA = 'Saldo publicitario (carga)';
 export const CAT_ENVIOS = 'Envíos';
 export const CAT_RETIROS = 'Retiro de socios';
+
+// Gasto sin `estado` (filas de antes de la Fase 5): se trata como ya pagado,
+// que es lo único que podía significar en ese momento.
+export const gastoEstaPagado = (g: Gasto) => (g.estado || 'pagado') === 'pagado';
 
 // Umbrales heredados del Excel.
 export const MARGEN_MINIMO = 0.55;      // debajo, conviene revisar precios
@@ -113,6 +120,7 @@ export type ResumenMes = {
   diferenciaEnvios: number;
   gastosOperativos: number;
   publicidad: number;
+  publicidadCargada: number;
   publicidadSobreFacturacion: number | null;
   retiros: number;
   resultado: number;
@@ -123,7 +131,9 @@ export function resumenDelMes(d: Dataset, mes: number): ResumenMes {
   // precio_especial (amigo/canje/promo) queda afuera de facturación, costo,
   // margen y ticket — no de trabajos, horas o envíos, que son actividad real.
   const rentables = ventas.filter((v) => !v.precio_especial);
-  const gastos = d.gastos.filter((g) => claveMes(g.fecha) === mes);
+  // Solo gastos ya pagados: uno "pedido" o "recibido" todavía no salió de la
+  // caja, así que no debería inflar (ni desinflar) el resultado del mes.
+  const gastos = d.gastos.filter((g) => claveMes(g.fecha) === mes && gastoEstaPagado(g));
 
   const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
   const gastoDe = (cat: string) =>
@@ -136,10 +146,11 @@ export function resumenDelMes(d: Dataset, mes: number): ResumenMes {
   const horas = minutos / 60;
 
   const totalGastos = sum(gastos.map((g) => g.monto || 0));
-  const gastosOperativos = totalGastos - gastoDe(CAT_RETIROS) - gastoDe(CAT_ENVIOS);
+  const gastosOperativos = totalGastos - gastoDe(CAT_RETIROS) - gastoDe(CAT_ENVIOS) - gastoDe(CAT_PUBLICIDAD_CARGA);
   const enviosCobrados = sum(ventas.map((v) => v.envio_cobrado || 0));
   const enviosPagados = gastoDe(CAT_ENVIOS);
   const publicidad = gastoDe(CAT_PUBLICIDAD);
+  const publicidadCargada = gastoDe(CAT_PUBLICIDAD_CARGA);
 
   return {
     mes,
@@ -157,9 +168,10 @@ export function resumenDelMes(d: Dataset, mes: number): ResumenMes {
     diferenciaEnvios: enviosCobrados - enviosPagados,
     gastosOperativos,
     publicidad,
+    publicidadCargada,
     publicidadSobreFacturacion: facturacion ? publicidad / facturacion : null,
     retiros: gastoDe(CAT_RETIROS),
-    resultado: facturacion - gastosOperativos,
+    resultado: facturacion - costoMateriales - gastosOperativos,
   };
 }
 
@@ -379,4 +391,47 @@ export function gastosFijosFaltantes(d: Dataset, mes: number): string[] {
   return Array.from(conteo.entries())
     .filter(([cat, n]) => n === previos.length && !catsDelMes.has(cat))
     .map(([cat]) => cat);
+}
+
+export type ResumenContador = {
+  maquina: string;
+  desde: string;
+  hasta: string;
+  contadorInicial: number | null;
+  contadorFinal: number | null;
+  deltaContador: number | null;
+  hojasCargadas: number;
+  // deltaContador - hojasCargadas: positivo = la máquina imprimió más de lo
+  // que quedó registrado en ventas (trabajos sin cargar, o hojas de prueba).
+  diferencia: number | null;
+};
+
+// Fase 7 — contrasta lo que la máquina realmente imprimió (el contador físico)
+// contra lo que se cargó como venta para esa máquina en el mismo período.
+// `contadores` son lecturas puntuales (no un delta ya calculado): para un
+// período dado se toma la última lectura en o antes de cada extremo.
+export function ventasFaltantes(d: Dataset, maquina: string, desde: string, hasta: string): ResumenContador {
+  const lecturas = d.contadores
+    .filter((c) => c.maquina === maquina)
+    .map((c) => ({ fecha: c.fecha, total: (c.contador_bn || 0) + (c.contador_color || 0) }))
+    .sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+
+  const ultimaHasta = (limite: string) =>
+    [...lecturas].reverse().find((l) => l.fecha <= limite) ?? null;
+
+  const inicial = ultimaHasta(desde);
+  const final = ultimaHasta(hasta);
+  const contadorInicial = inicial?.total ?? null;
+  const contadorFinal = final?.total ?? null;
+  const deltaContador =
+    contadorInicial !== null && contadorFinal !== null ? contadorFinal - contadorInicial : null;
+
+  const hojasCargadas = d.ventas
+    .filter((v) => v.maquina === maquina && v.fecha >= desde && v.fecha <= hasta)
+    .reduce((a, v) => a + (v.hojas || 0), 0);
+
+  return {
+    maquina, desde, hasta, contadorInicial, contadorFinal, deltaContador, hojasCargadas,
+    diferencia: deltaContador !== null ? deltaContador - hojasCargadas : null,
+  };
 }

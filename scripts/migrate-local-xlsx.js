@@ -22,7 +22,10 @@
 const path = require('path');
 const XLSX = require('xlsx');
 const { newId } = require('../netlify/functions/_lib/schema');
-const { PLANTILLAS_SEMILLA, TARIFAS_SEMILLA, VIGENTE_DESDE } = require('./_lib/seed-data');
+const {
+  PLANTILLAS_SEMILLA, TARIFAS_SEMILLA, VIGENTE_DESDE,
+  LISTAS_FASE5, CATEGORIA_GASTO_VIEJA, CATEGORIA_GASTO_NUEVA, MERGE_PRODUCTOS,
+} = require('./_lib/seed-data');
 
 function valorDeFlag(nombre) {
   const i = process.argv.indexOf(`--${nombre}`);
@@ -131,6 +134,75 @@ function faseVentasShape(wb, log) {
   escribirHoja(wb, 'ventas', header, datos);
 }
 
+// --- Fase 5: estado/anuncio en gastos + separar categoría de publicidad ---
+function faseGastos(wb, log) {
+  const { header, datos } = leerHoja(wb, 'gastos');
+  const faltan = ['estado', 'anuncio'].filter((c) => !header.includes(c));
+  if (faltan.length > 0) {
+    header.push(...faltan);
+    datos.forEach((f) => faltan.forEach((c) => f.push(c === 'estado' ? 'pagado' : '')));
+    log(`gastos: agregadas ${faltan.join(', ')} (${datos.length} filas backfilleadas en "pagado"/"").`);
+  } else {
+    log('gastos (estado/anuncio): ya existían.');
+  }
+
+  const idxCategoria = header.indexOf('categoria');
+  let renombradas = 0;
+  datos.forEach((f) => {
+    if (f[idxCategoria] === CATEGORIA_GASTO_VIEJA) { f[idxCategoria] = CATEGORIA_GASTO_NUEVA; renombradas++; }
+  });
+  log(`gastos: ${renombradas} filas con categoría "${CATEGORIA_GASTO_VIEJA}" renombradas a "${CATEGORIA_GASTO_NUEVA}".`);
+  escribirHoja(wb, 'gastos', header, datos);
+
+  const cols = ['tipo', 'valor', 'orden', 'activo'];
+  const existente = leerHoja(wb, 'listas');
+  const filasListas = existente?.datos || [];
+  const yaCargadas = new Set(filasListas.map((f) => `${f[0]}|${f[1]}`));
+  const porTipoMax = new Map();
+  filasListas.forEach((f) => {
+    if (String(f[3]).toUpperCase() !== 'FALSE') porTipoMax.set(f[0], Math.max(porTipoMax.get(f[0]) || 0, Number(f[2]) || 0));
+  });
+  const aInsertar = LISTAS_FASE5.filter((l) => !yaCargadas.has(`${l.tipo}|${l.valor}`));
+  aInsertar.forEach((l) => {
+    const orden = (porTipoMax.get(l.tipo) || 0) + 1;
+    porTipoMax.set(l.tipo, orden);
+    filasListas.push([l.tipo, l.valor, orden, 'TRUE']);
+  });
+  filasListas.forEach((f) => {
+    if (f[0] === 'categoria_gasto' && f[1] === CATEGORIA_GASTO_VIEJA) f[3] = 'FALSE';
+  });
+  escribirHoja(wb, 'listas', cols, filasListas);
+  log(`listas: ${aInsertar.length} opciones nuevas insertadas, "${CATEGORIA_GASTO_VIEJA}" desactivada.`);
+}
+
+// --- Fase 6: fusionar categorías de producto ---
+function faseMergeProductos(wb, log) {
+  const { header, datos } = leerHoja(wb, 'ventas');
+  const idxProducto = header.indexOf('producto');
+  const { header: hL, datos: listas } = leerHoja(wb, 'listas');
+  const idxTipo = hL.indexOf('tipo');
+  const idxValor = hL.indexOf('valor');
+  const idxActivo = hL.indexOf('activo');
+
+  MERGE_PRODUCTOS.forEach(({ de, a }) => {
+    let n = 0;
+    datos.forEach((f) => { if (f[idxProducto] === de) { f[idxProducto] = a; n++; } });
+    listas.forEach((f) => { if (f[idxTipo] === 'producto' && f[idxValor] === de) f[idxActivo] = 'FALSE'; });
+    log(`"${de}" -> "${a}": ${n} ventas reescritas, entrada vieja desactivada en listas.`);
+  });
+
+  escribirHoja(wb, 'ventas', header, datos);
+  escribirHoja(wb, 'listas', hL, listas);
+}
+
+// --- Fase 7: pestaña `contadores`, vacía ---
+function faseContadores(wb, log) {
+  if (wb.Sheets['contadores']) { log('contadores: ya existe.'); return; }
+  const cols = ['id', 'fecha', 'maquina', 'contador_bn', 'contador_color', 'activo'];
+  escribirHoja(wb, 'contadores', cols, []);
+  log('contadores: pestaña creada, vacía.');
+}
+
 function main() {
   const entrada = valorDeFlag('in');
   if (!entrada) {
@@ -148,6 +220,9 @@ function main() {
   console.log('Fase 1 — plantillas:'); fasePlantillas(wb, log);
   console.log('Fase 3 — tarifas:'); faseTarifas(wb, log);
   console.log('Fase 4 — forma de ventas:'); faseVentasShape(wb, log);
+  console.log('Fase 5 — gastos:'); faseGastos(wb, log);
+  console.log('Fase 6 — fusionar productos:'); faseMergeProductos(wb, log);
+  console.log('Fase 7 — contadores:'); faseContadores(wb, log);
 
   XLSX.writeFile(wb, salida);
   console.log(`\nListo. Archivo migrado escrito en:\n  ${path.resolve(salida)}`);

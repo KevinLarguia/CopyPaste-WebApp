@@ -38,6 +38,13 @@ const SECCIONES = [
       { href: '/evolucion/', texto: 'Evolución' },
     ],
   },
+  {
+    grupo: 'Máquinas',
+    items: [
+      { href: '/contadores/nuevo/', texto: 'Cargar contador' },
+      { href: '/contadores/', texto: 'Contadores' },
+    ],
+  },
   { grupo: 'Ajustes', items: [{ href: '/config/', texto: 'Listas' }] },
 ];
 

@@ -39,4 +39,25 @@ const TARIFAS_SEMILLA = [
   { tipo: 'terminacion', clave: 'Anillado', valor: 200, unidad: 'por unidad' },
 ];
 
-module.exports = { PLANTILLAS_SEMILLA, TARIFAS_SEMILLA, VIGENTE_DESDE };
+// Fase 5 — antes había una sola categoría "Publicidad Meta" mezclando carga
+// de saldo y consumo real. Se separa en dos; "canal" suma una opción para
+// cuando no se preguntó (mejor que forzar una respuesta inventada).
+const LISTAS_FASE5 = [
+  { tipo: 'categoria_gasto', valor: 'Publicidad Meta (consumo)' },
+  { tipo: 'categoria_gasto', valor: 'Saldo publicitario (carga)' },
+  { tipo: 'canal', valor: 'No sé / no preguntado' },
+];
+const CATEGORIA_GASTO_VIEJA = 'Publicidad Meta';
+const CATEGORIA_GASTO_NUEVA = 'Publicidad Meta (consumo)';
+
+// Fase 6 — dos categorías de producto que en la práctica eran lo mismo que
+// otra ya existente, según el uso real de las primeras semanas.
+const MERGE_PRODUCTOS = [
+  { de: 'Libros / apuntes', a: 'Cuadernillos / anillados' },
+  { de: 'Etiquetas para productos', a: 'Stickers troquelados / corte de contorno' },
+];
+
+module.exports = {
+  PLANTILLAS_SEMILLA, TARIFAS_SEMILLA, VIGENTE_DESDE,
+  LISTAS_FASE5, CATEGORIA_GASTO_VIEJA, CATEGORIA_GASTO_NUEVA, MERGE_PRODUCTOS,
+};

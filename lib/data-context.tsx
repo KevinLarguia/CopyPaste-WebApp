@@ -6,7 +6,7 @@ import type { Dataset, ItemLista } from './types';
 
 const VACIO: Dataset = {
   ventas: [], gastos: [], clientes: [], listas: [], historico: [], plantillas: [], tarifas: [],
-  leidoEn: '',
+  contadores: [], leidoEn: '',
 };
 
 type Estado = {

@@ -191,8 +191,98 @@ momento hace falta reseedear una instalación nueva.
 
 ---
 
-## Lo que sigue
+## Fase 5 — Gastos y publicidad
 
-Quedan la Fase 5 (gastos y publicidad, "Resultado del mes" correcto), Fase 6
-(fusionar categorías de producto duplicadas) y Fase 7 (contador de páginas).
-Siguen el orden y las decisiones documentadas en la conversación original.
+"Resultado del mes" pasa a ser el número real: resta costo de materiales y
+gastos operativos **ya pagados**, y separa la carga de saldo publicitario
+(movimiento de caja) de su consumo real (gasto).
+
+- `gastos` suma `estado` (`pedido` / `recibido` / `pagado`, default `pagado`
+  para las filas existentes) y `anuncio` (solo tiene sentido para la
+  categoría de consumo publicitario). Se agregan al final — a diferencia de
+  la Fase 4, esto es seguro desplegar antes de migrar la planilla real.
+- `resumenDelMes` solo cuenta gastos con `estado === 'pagado'`: uno "pedido"
+  o "recibido" todavía no salió de la caja.
+- **`resultado`** ahora resta también `costoMateriales` (antes solo restaba
+  gastos operativos) — es la corrección más importante de esta fase.
+- La categoría **"Publicidad Meta"** se separa en dos: **"Publicidad Meta
+  (consumo)"** (lo que Meta efectivamente gastó — cuenta como gasto
+  operativo) y **"Saldo publicitario (carga)"** (plata que pasó a la cuenta
+  de Meta, todavía no gastada — se trata como `NO_OPERATIVA`, junto con
+  Retiros y Envíos). Los gastos históricos con la categoría vieja se
+  renombran a "(consumo)" — es lo que efectivamente representaban.
+- Panel: nueva sección "Publicidad: invertido vs. atribuido" (cargado vs.
+  consumido vs. saldo restante en la cuenta de Meta).
+- `listas` suma una opción de canal "No sé / no preguntado", para no forzar
+  una respuesta inventada.
+
+**Archivos nuevos:** `scripts/migrate-fase5-gastos.js`. **Modificados:**
+`netlify/functions/_lib/schema.js`, `lib/calc.ts`, `lib/types.ts`,
+`app/gastos/nuevo/page.tsx`, `app/page.tsx`, `app/config/page.tsx`.
+
+**Correr antes o después de mergear** (las columnas van al final, así que no
+rompe nada mientras tanto — pero sin correrlo, los gastos de publicidad
+cargados como "Publicidad Meta" viejo no se separan de carga/consumo):
+```
+node scripts/migrate-fase5-gastos.js --apply
+node scripts/verificar.js
+```
+
+## Fase 6 — Fusionar categorías de producto
+
+Sin cambio de esquema ni de código de la app — `porProducto` ya agrupa por
+lo que sea que diga `producto`, así que reescribir el dato alcanza.
+`"Libros / apuntes"` se fusiona en `"Cuadernillos / anillados"` y
+`"Etiquetas para productos"` en `"Stickers troquelados / corte de contorno"`
+(las dos resultaron ser lo mismo que la otra categoría, según el uso real).
+La entrada vieja se desactiva en `listas`, nunca se borra.
+
+```
+node scripts/migrate-fase6-merge-productos.js
+node scripts/migrate-fase6-merge-productos.js --apply
+node scripts/verificar.js
+```
+
+## Fase 7 — Contador de páginas
+
+Compara lo que cada máquina imprimió de verdad (lectura de su contador
+físico) contra lo cargado como venta para esa máquina en el mismo período —
+detecta trabajos hechos y no registrados.
+
+- Hoja nueva `contadores` (fecha, máquina, contador BN, contador color).
+- `lib/calc.ts: ventasFaltantes(d, maquina, desde, hasta)` — toma la última
+  lectura de contador en o antes de cada extremo del período, calcula el
+  delta, y lo compara contra la suma de `hojas` cargadas en `ventas` para
+  esa máquina (depende de `hojas`/`maquina`, ya disponibles desde la Fase 3).
+- `/contadores/nuevo/`: carga una lectura (fecha, máquina, contador BN,
+  contador color). `/contadores/`: por máquina, compara las dos lecturas más
+  recientes y avisa si hay hojas sin explicar.
+- `lib/constants.ts` (nuevo): `MAQUINAS` pasa a vivir acá en vez de
+  duplicarse entre `ventas/nueva` y `contadores/nuevo`.
+
+⚠️ **Correr esto ANTES de desplegar el código de esta fase**, no después:
+`netlify/functions/data.js` ya pide la pestaña `contadores` en su lectura
+batcheada, y si no existe todavía en la planilla real, `/api/data` se rompe
+entero (mismo problema que ya pasó con `plantillas`/`tarifas` en la Fase 1).
+
+```
+node scripts/migrate-fase7-contadores.js --apply
+node scripts/verificar.js
+```
+
+**Archivos nuevos:** `netlify/functions/contadores.js`,
+`app/contadores/nuevo/page.tsx`, `app/contadores/page.tsx`,
+`scripts/migrate-fase7-contadores.js`, `lib/constants.ts`. **Modificados:**
+`netlify/functions/_lib/schema.js`, `netlify/functions/data.js`, `lib/types.ts`,
+`lib/data-context.tsx`, `lib/calc.ts`, `components/AppShell.tsx`,
+`app/ventas/nueva/page.tsx` (usa `MAQUINAS` de `lib/constants.ts`).
+
+---
+
+## Migración local (alternativa sin credenciales de API)
+
+`scripts/migrate-local-xlsx.js` aplica las Fases 1, 3, 4, 5, 6 y 7 sobre un
+archivo Excel descargado de la planilla real (no crea `contadores` con datos
+de la Fase 7 vía API porque no hace falta credencial — la crea vacía igual).
+Ver la cabecera del archivo para el modo de uso y la advertencia sobre
+"Reemplazar la hoja de cálculo".
